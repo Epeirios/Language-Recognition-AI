@@ -1,6 +1,6 @@
 ﻿namespace Language_Recognition_AI
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.tvDataStats = new System.Windows.Forms.TreeView();
+            this.SuspendLayout();
+            // 
+            // tvDataStats
+            // 
+            this.tvDataStats.Location = new System.Drawing.Point(12, 12);
+            this.tvDataStats.Name = "tvDataStats";
+            this.tvDataStats.ShowPlusMinus = false;
+            this.tvDataStats.Size = new System.Drawing.Size(213, 318);
+            this.tvDataStats.TabIndex = 0;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(816, 342);
+            this.Controls.Add(this.tvDataStats);
+            this.Name = "MainForm";
+            this.Text = "Language Recognition AI";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TreeView tvDataStats;
     }
 }

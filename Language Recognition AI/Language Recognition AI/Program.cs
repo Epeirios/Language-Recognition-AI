@@ -17,9 +17,10 @@ namespace Language_Recognition_AI
             string[] temp = DataManager.Instance.Languages;
 
 
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
