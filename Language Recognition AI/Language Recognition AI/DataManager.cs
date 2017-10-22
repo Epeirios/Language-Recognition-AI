@@ -56,7 +56,7 @@ namespace Language_Recognition_AI
 
             for (int i = 0; i < returnValue.Length; i++)
             {
-                returnValue[i] = new LanguageRecords(languages[i]);
+                returnValue[i] = new LanguageRecords((Languages)i);
             }
 
             string[] data = resouce.Split('\n');

@@ -14,10 +14,6 @@ namespace Language_Recognition_AI
         [STAThread]
         static void Main()
         {
-            string[] temp = DataManager.Instance.Languages;
-
-
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

@@ -11,6 +11,14 @@ namespace Language_Recognition_AI
         protected int totalOccurencesCount;
         protected Languages language;
 
+        public Languages Language
+        {
+            get
+            {
+                return language;
+            }
+        }
+
         public int TotalOccurences
         {
             get

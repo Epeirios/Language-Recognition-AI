@@ -12,6 +12,8 @@ namespace Language_Recognition_AI
 {
     public partial class MainForm : Form
     {
+        private IModel[] models;
+
         public MainForm()
         {
             InitializeComponent();
@@ -19,6 +21,8 @@ namespace Language_Recognition_AI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            models = new IModel[] { new BiGramModel() };
+
             FillTvStats();
         }
 
@@ -33,27 +37,27 @@ namespace Language_Recognition_AI
                 TreeNode minLength = new TreeNode(string.Format("Min Length record: {0}", item.MinLenghtRecord));
                 TreeNode dictLength = new TreeNode(string.Format("Dict Lenght: {0}", item.CharDictionary.Length));
 
-                TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength, dictLength};
+                TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength, dictLength };
 
-                tvDataStats.Nodes.Add(new TreeNode(item.Language, array));
+                tvDataStats.Nodes.Add(new TreeNode(item.Language.ToString(), array));
             }
 
             tvDataStats.ExpandAll();
         }
 
-        private void TrainMatrix()
+        private void TrainModels()
         {
-            LanguageRecords[] trainingData = DataManager.Instance.TrainingData;
-
-            foreach (LanguageRecords lang in trainingData)
+            foreach (IModel model in models)
             {
-                int dictLength = lang.CharDictionary.Length;
-                int[,] matrix = new int[dictLength, dictLength];
+                model.Train(DataManager.Instance.TrainingData);
+            }
+        }
 
-                foreach (string record in lang.Records)
-                {
-
-                }
+        private void ValidateModels()
+        {
+            foreach (IModel model in models)
+            {
+                model.Validate(DataManager.Instance.ValidationData);
             }
         }
     }

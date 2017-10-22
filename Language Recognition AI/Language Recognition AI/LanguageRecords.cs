@@ -8,7 +8,7 @@ namespace Language_Recognition_AI
 {
     public class LanguageRecords
     {
-        private string language;
+        private Languages language;
 
         private int recordCount;
         private int maxLenghtRecord;
@@ -17,7 +17,7 @@ namespace Language_Recognition_AI
         private List<string> records;
         private List<char> charDictionary;
 
-        public string Language
+        public Languages Language
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Language_Recognition_AI
             }
         }
 
-        public LanguageRecords(string language)
+        public LanguageRecords(Languages language)
         {
             this.language = language;
 
