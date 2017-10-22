@@ -12,7 +12,7 @@ namespace Language_Recognition_AI
 {
     public partial class MainForm : Form
     {
-        private IModel[] models;
+        private ModelControl[] modelControls;
 
         public MainForm()
         {
@@ -21,9 +21,18 @@ namespace Language_Recognition_AI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            models = new IModel[] { new BiGramModel() };
+            modelControls = new ModelControl[] { new ModelControl(new BiGramModel(), "BiGram") };
+
+            foreach (var modelControl in modelControls)
+            {
+                listView1.Controls.Add(modelControl);
+            }
 
             FillTvStats();
+
+            TrainModels();
+
+            ValidateModels();
         }
 
         private void FillTvStats()
@@ -35,7 +44,7 @@ namespace Language_Recognition_AI
                 TreeNode recordCount = new TreeNode(string.Format("Record Count: {0}", item.RecordCount));
                 TreeNode maxLength = new TreeNode(string.Format("Max Length record: {0}", item.MaxLenghtRecord));
                 TreeNode minLength = new TreeNode(string.Format("Min Length record: {0}", item.MinLenghtRecord));
-                TreeNode dictLength = new TreeNode(string.Format("Dict Lenght: {0}", item.CharDictionary.Length));
+                TreeNode dictLength = new TreeNode(string.Format("Dict Lenght: {0}", item.CharDictionary.Count));
 
                 TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength, dictLength };
 
@@ -47,17 +56,25 @@ namespace Language_Recognition_AI
 
         private void TrainModels()
         {
-            foreach (IModel model in models)
+            foreach (var modelControl in modelControls)
             {
-                model.Train(DataManager.Instance.TrainingData);
+                modelControl.Model.Train(DataManager.Instance.TrainingData);
+
+                modelControl.AddNode("Trained Data");
             }
         }
 
         private void ValidateModels()
         {
-            foreach (IModel model in models)
+            foreach (var modelControl in modelControls)
             {
-                model.Validate(DataManager.Instance.ValidationData);
+                IModel model = modelControl.Model;
+                
+                Report report = model.Validate(DataManager.Instance.ValidationData);
+
+                modelControl.AddNode(string.Format("Number of Cases: {0}", report.CountCases));
+                modelControl.AddNode(string.Format("Cases Correct: {0}", report.CountCorrect));
+                modelControl.AddNode(string.Format("Cases Incorrect: {0}", report.CountIncorrect));
             }
         }
     }

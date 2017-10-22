@@ -8,7 +8,7 @@ namespace Language_Recognition_AI
 {
     public abstract class NGram
     {
-        protected int totalOccurencesCount;
+        protected int totalOccurencesCount = 0;
         protected Languages language;
 
         public Languages Language
@@ -30,8 +30,6 @@ namespace Language_Recognition_AI
         public NGram(int size, Languages language)
         {
             this.language = language;
-
-            FillMatrix(size);
         }
 
         protected abstract void FillMatrix(int size);

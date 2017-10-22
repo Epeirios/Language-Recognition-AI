@@ -13,6 +13,8 @@ namespace Language_Recognition_AI
         public TriGram(int size, Languages language) : base(size, language)
         {
             matrix = new int[size, size, size];
+
+            FillMatrix(size);
         }
 
         public override void AddOccurence(string value)

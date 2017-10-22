@@ -57,11 +57,11 @@ namespace Language_Recognition_AI
             }
         }
 
-        public char[] CharDictionary
+        public List<char> CharDictionary
         {
             get
             {
-                return charDictionary.ToArray();
+                return charDictionary;
             }
         }
 

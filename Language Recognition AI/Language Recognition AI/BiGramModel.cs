@@ -19,7 +19,7 @@ namespace Language_Recognition_AI
         {
             foreach (LanguageRecords lRecords in languageRecords)
             {
-                BiGram bigram = new BiGram(lRecords.CharDictionary.Length, lRecords.Language);
+                BiGram bigram = new BiGram(lRecords.CharDictionary.Count, lRecords.Language);
 
                 foreach (string record in lRecords.Records)
                 {
