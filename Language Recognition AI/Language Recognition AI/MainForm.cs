@@ -24,23 +24,37 @@ namespace Language_Recognition_AI
 
         private void FillTvStats()
         {
-            object[] data = { DataManager.Instance.TrainingData, DataManager.Instance.ValidationData };
-
             LanguageRecords[] trainingData = DataManager.Instance.TrainingData;
-            LanguageRecords[] validationData = DataManager.Instance.ValidationData;
 
             foreach (var item in trainingData)
             {
-                TreeNode recordCount = new TreeNode(string.Format("Record Count:\t{0}", item.RecordCount));
-                TreeNode maxLength = new TreeNode(string.Format("Max Length record:\t{0}", item.MaxLenghtRecord));
-                TreeNode minLength = new TreeNode(string.Format("Min Length record:\t{0}", item.MinLenghtRecord));
+                TreeNode recordCount = new TreeNode(string.Format("Record Count: {0}", item.RecordCount));
+                TreeNode maxLength = new TreeNode(string.Format("Max Length record: {0}", item.MaxLenghtRecord));
+                TreeNode minLength = new TreeNode(string.Format("Min Length record: {0}", item.MinLenghtRecord));
+                TreeNode dictLength = new TreeNode(string.Format("Dict Lenght: {0}", item.CharDictionary.Length));
 
-                TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength };
+                TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength, dictLength};
 
                 tvDataStats.Nodes.Add(new TreeNode(item.Language, array));
             }
 
             tvDataStats.ExpandAll();
+        }
+
+        private void TrainMatrix()
+        {
+            LanguageRecords[] trainingData = DataManager.Instance.TrainingData;
+
+            foreach (LanguageRecords lang in trainingData)
+            {
+                int dictLength = lang.CharDictionary.Length;
+                int[,] matrix = new int[dictLength, dictLength];
+
+                foreach (string record in lang.Records)
+                {
+
+                }
+            }
         }
     }
 }

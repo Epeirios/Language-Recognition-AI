@@ -15,6 +15,7 @@ namespace Language_Recognition_AI
         private int minLenghtRecord;
 
         private List<string> records;
+        private List<char> charDictionary;
 
         public string Language
         {
@@ -56,6 +57,14 @@ namespace Language_Recognition_AI
             }
         }
 
+        public char[] CharDictionary
+        {
+            get
+            {
+                return charDictionary.ToArray();
+            }
+        }
+
         public LanguageRecords(string language)
         {
             this.language = language;
@@ -65,6 +74,7 @@ namespace Language_Recognition_AI
             minLenghtRecord = 999;
 
             records = new List<string>();
+            charDictionary = new List<char>();
         }
 
         public void Addrecord(string record)
@@ -80,9 +90,17 @@ namespace Language_Recognition_AI
                 maxLenghtRecord = recordlength;
             }
 
-            if (recordlength < minLenghtRecord) 
+            if (recordlength < minLenghtRecord)
             {
                 minLenghtRecord = recordlength;
+            }
+
+            foreach (char chr in record)
+            {
+                if (!charDictionary.Contains(chr))
+                {
+                    charDictionary.Add(chr);
+                }
             }
         }
     }

@@ -23,18 +23,8 @@ namespace Language_Recognition_AI
             }
         }
 
-        private string[] langFilter = { "bs", "id", "pt-PT", "pt-BR", "fr-CA", "fr-FR" };
-
         private LanguageRecords[] trainingData;
         private LanguageRecords[] validationData;
-
-        public string[] Languages
-        {
-            get
-            {
-                return langFilter;
-            }
-        }
 
         public LanguageRecords[] TrainingData
         {
@@ -60,7 +50,7 @@ namespace Language_Recognition_AI
 
         private LanguageRecords[] ProcessData(string resouce)
         {
-            List<string> languages = new List<string>(langFilter);
+            List<string> languages = Enum.GetNames(typeof(Languages)).ToList<string>();
 
             LanguageRecords[] returnValue = new LanguageRecords[6];
 
@@ -78,6 +68,10 @@ namespace Language_Recognition_AI
                 if (cur.Length == 2)
                 {
                     string lang = cur[1];
+                    if (lang.Length == 5)
+                    {
+                        lang = lang.Remove(2, 1);
+                    }
 
                     if (languages.Contains(lang))
                     {
