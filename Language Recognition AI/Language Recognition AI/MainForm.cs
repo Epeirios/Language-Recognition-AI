@@ -13,6 +13,7 @@ namespace Language_Recognition_AI
     public partial class MainForm : Form
     {
         private ModelControl[] modelControls;
+        BackgroundWorker backgroundWorker;
 
         public MainForm()
         {
@@ -23,16 +24,24 @@ namespace Language_Recognition_AI
         {
             modelControls = new ModelControl[] { new ModelControl(new BiGramModel(), "BiGram") };
 
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+
+            backgroundWorker.RunWorkerAsync();
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             foreach (var modelControl in modelControls)
             {
                 listView1.Controls.Add(modelControl);
             }
+        }
 
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
             FillTvStats();
-
-            TrainModels();
-
-            ValidateModels();
         }
 
         private void FillTvStats()
@@ -48,34 +57,10 @@ namespace Language_Recognition_AI
 
                 TreeNode[] array = new TreeNode[] { recordCount, maxLength, minLength, dictLength };
 
-                tvDataStats.Nodes.Add(new TreeNode(item.Language.ToString(), array));
+                this.InvokeEx(f => f.tvDataStats.Nodes.Add(new TreeNode(item.Language.ToString(), array)));
             }
 
-            tvDataStats.ExpandAll();
-        }
-
-        private void TrainModels()
-        {
-            foreach (var modelControl in modelControls)
-            {
-                modelControl.Model.Train(DataManager.Instance.TrainingData);
-
-                modelControl.AddNode("Trained Data");
-            }
-        }
-
-        private void ValidateModels()
-        {
-            foreach (var modelControl in modelControls)
-            {
-                IModel model = modelControl.Model;
-                
-                Report report = model.Validate(DataManager.Instance.ValidationData);
-
-                modelControl.AddNode(string.Format("Number of Cases: {0}", report.CountCases));
-                modelControl.AddNode(string.Format("Cases Correct: {0}", report.CountCorrect));
-                modelControl.AddNode(string.Format("Cases Incorrect: {0}", report.CountIncorrect));
-            }
+            this.InvokeEx(f => f.tvDataStats.ExpandAll());
         }
     }
 }

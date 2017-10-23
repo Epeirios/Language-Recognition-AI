@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,18 @@ namespace Language_Recognition_AI
 
             for (var i = 0; i < s.Length; i += partLength)
                 yield return s.Substring(i, Math.Min(partLength, s.Length - i));
+        }
+
+        public static void InvokeEx<T>(this T @this, Action<T> action) where T : ISynchronizeInvoke
+        {
+            if (@this.InvokeRequired)
+            {
+                @this.Invoke(action, new object[] { @this });
+            }
+            else
+            {
+                action(@this);
+            }
         }
     }
 }
