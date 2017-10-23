@@ -6,36 +6,18 @@ using System.Threading.Tasks;
 
 namespace Language_Recognition_AI
 {
-    public class TriGramModel : IModel
+    public abstract class NGramModel : IModel
     {
-        const int partlength = 3;
+        protected List<NGram> nGrams;
 
-        List<TriGram> TriGrams;
+        protected int partlength;
 
-        public TriGramModel()
+        public NGramModel()
         {
-            TriGrams = new List<TriGram>();
+            nGrams = new List<NGram>();
         }
 
-        public void Train(LanguageRecords[] languageRecords)
-        {
-            foreach (LanguageRecords lRecords in languageRecords)
-            {
-                TriGram trigram = new TriGram(lRecords.CharDictionary.Count, lRecords.Language);
-
-                foreach (string record in lRecords.Records)
-                {
-                    IEnumerable<string> parts = Utility.SplitInParts(record, partlength);
-
-                    foreach (var item in parts)
-                    {
-                        trigram.AddOccurence(item);
-                    }
-                }
-
-                TriGrams.Add(trigram);
-            }
-        }
+        public abstract void Train(LanguageRecords[] languageRecords);
 
         public Report Validate(LanguageRecords[] languageRecords)
         {
@@ -60,7 +42,7 @@ namespace Language_Recognition_AI
         {
             Dictionary<Languages, float> report = new Dictionary<Languages, float>();
 
-            foreach (var item in TriGrams)
+            foreach (var item in nGrams)
             {
                 float propability = 0;
                 IEnumerable<string> parts = Utility.SplitInParts(sentence, partlength);

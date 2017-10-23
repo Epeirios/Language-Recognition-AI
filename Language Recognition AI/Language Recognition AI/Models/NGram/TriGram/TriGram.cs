@@ -29,6 +29,14 @@ namespace Language_Recognition_AI
         {
             int[] coords = GetCoords(value);
 
+            foreach (var item in coords)
+            {
+                if (item == -1)
+                {
+                    return 0.00000000001f;
+                }
+            }
+
             return matrix[coords[0], coords[1], coords[2]] / (float)totalOccurencesCount;
         }
 
@@ -39,7 +47,7 @@ namespace Language_Recognition_AI
             int[] coords = new int[3];
 
             List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
-
+            
             coords[0] = dict.IndexOf(' ');
             coords[1] = dict.IndexOf(' ');
             coords[2] = dict.IndexOf(' ');
