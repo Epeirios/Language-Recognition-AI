@@ -60,6 +60,8 @@ namespace Language_Recognition_AI
 
         public override float GetPropability(string value)
         {
+            float result = 0;
+
             if (value.Length == 2)
             {
                 List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
@@ -86,7 +88,7 @@ namespace Language_Recognition_AI
                     return 0;
                 }
 
-                return matrix[x, y] / totalOccurencesCount;
+                result = matrix[x, y] / (float)totalOccurencesCount;
             }
             else if(value.Length == 1)
             {
@@ -104,13 +106,14 @@ namespace Language_Recognition_AI
                     return 0;
                 }
 
-                return matrix[x, y] / totalOccurencesCount;
+                result = matrix[x, y] / (float)totalOccurencesCount;
             }
             else
             {
                 new NotImplementedException();
-                return new float();
-            }            
+            }
+
+            return result;
         }
     }
 }

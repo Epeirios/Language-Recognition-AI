@@ -32,6 +32,10 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.tbInputString = new System.Windows.Forms.TextBox();
+            this.btnProcess = new System.Windows.Forms.Button();
+            this.dgvResults = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
             // 
             // tvDataStats
@@ -39,14 +43,14 @@
             this.tvDataStats.Location = new System.Drawing.Point(12, 29);
             this.tvDataStats.Name = "tvDataStats";
             this.tvDataStats.ShowPlusMinus = false;
-            this.tvDataStats.Size = new System.Drawing.Size(213, 565);
+            this.tvDataStats.Size = new System.Drawing.Size(213, 374);
             this.tvDataStats.TabIndex = 0;
             // 
             // listView1
             // 
             this.listView1.Location = new System.Drawing.Point(231, 29);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1021, 565);
+            this.listView1.Size = new System.Drawing.Size(1125, 374);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -68,11 +72,46 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Models";
             // 
+            // tbInputString
+            // 
+            this.tbInputString.Location = new System.Drawing.Point(12, 460);
+            this.tbInputString.Multiline = true;
+            this.tbInputString.Name = "tbInputString";
+            this.tbInputString.Size = new System.Drawing.Size(411, 204);
+            this.tbInputString.TabIndex = 4;
+            // 
+            // btnProcess
+            // 
+            this.btnProcess.Location = new System.Drawing.Point(429, 553);
+            this.btnProcess.Name = "btnProcess";
+            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.TabIndex = 5;
+            this.btnProcess.Text = "Process";
+            this.btnProcess.UseVisualStyleBackColor = true;
+            this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
+            // 
+            // dgvResults
+            // 
+            this.dgvResults.AllowUserToAddRows = false;
+            this.dgvResults.AllowUserToDeleteRows = false;
+            this.dgvResults.AllowUserToResizeColumns = false;
+            this.dgvResults.AllowUserToResizeRows = false;
+            this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvResults.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvResults.Location = new System.Drawing.Point(510, 460);
+            this.dgvResults.Name = "dgvResults";
+            this.dgvResults.ReadOnly = true;
+            this.dgvResults.Size = new System.Drawing.Size(846, 204);
+            this.dgvResults.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 606);
+            this.ClientSize = new System.Drawing.Size(1368, 676);
+            this.Controls.Add(this.dgvResults);
+            this.Controls.Add(this.btnProcess);
+            this.Controls.Add(this.tbInputString);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listView1);
@@ -80,6 +119,7 @@
             this.Name = "MainForm";
             this.Text = "Language Recognition AI";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -91,5 +131,8 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbInputString;
+        private System.Windows.Forms.Button btnProcess;
+        private System.Windows.Forms.DataGridView dgvResults;
     }
 }

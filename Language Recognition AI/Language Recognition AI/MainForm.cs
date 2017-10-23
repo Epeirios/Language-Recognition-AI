@@ -62,5 +62,47 @@ namespace Language_Recognition_AI
 
             this.InvokeEx(f => f.tvDataStats.ExpandAll());
         }
+
+        private void btnProcess_Click(object sender, EventArgs e)
+        {
+            dgvResults.Rows.Clear();
+            dgvResults.Columns.Clear();
+
+            dgvResults.Columns.Add("Model", "Model");
+
+            foreach (var language in Enum.GetNames(typeof(Languages)))
+            {
+                dgvResults.Columns.Add(string.Format("Col{0}", language), language);
+            }
+
+            dgvResults.Columns.Add("Highest", "Highest");
+
+            foreach (var modelcontrol in modelControls)
+            {
+                float highestValue = 0.0f;
+
+                List<string> cells = new List<string>();
+                
+                cells.Add(modelcontrol.ModelName);
+
+                Dictionary<Languages, float> propabilities = modelcontrol.Model.ValidateSentence(tbInputString.Text);
+
+                foreach (var item in propabilities)
+                {
+                    float value = item.Value;
+
+                    if (value > highestValue)
+                    {
+                        highestValue = value;
+                    }
+
+                    cells.Add(value.ToString());
+                }
+
+                cells.Add(highestValue.ToString());
+
+                dgvResults.Rows.Add(cells.ToArray());
+            }
+        }
     }
 }

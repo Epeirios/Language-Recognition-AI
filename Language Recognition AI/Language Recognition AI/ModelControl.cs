@@ -13,8 +13,25 @@ namespace Language_Recognition_AI
     public partial class ModelControl : UserControl
     {
         IModel model;
+        string modelName;
 
         BackgroundWorker backgroundWorker;
+
+        public IModel Model
+        {
+            get
+            {
+                return model;
+            }
+        }
+
+        public string ModelName
+        {
+            get
+            {
+                return modelName;
+            }
+        }
 
         public ModelControl(IModel model, string modelName)
         {
@@ -25,6 +42,7 @@ namespace Language_Recognition_AI
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
             //backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
+            this.modelName = modelName;
             groupBox.Text = modelName;
             AddLogRecord("--Initialized--");
         }

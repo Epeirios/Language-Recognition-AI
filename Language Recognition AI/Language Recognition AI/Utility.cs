@@ -31,5 +31,10 @@ namespace Language_Recognition_AI
                 action(@this);
             }
         }
+
+        public static IEnumerable<T> GetEnumValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
     }
 }
