@@ -10,8 +10,10 @@ namespace Language_Recognition_AI
     {
         int[,] matrix;
 
-        public BiGram(int size, Languages language) : base(size, language)
+        public BiGram(List<string> dict, Languages language) : base(dict, language)
         {
+            int size = dict.Count;
+
             matrix = new int[size, size];
 
             FillMatrix(size);
@@ -30,12 +32,10 @@ namespace Language_Recognition_AI
             }
         }
 
-        public override void AddOccurence(string value)
+        public override void AddOccurence(string[] value)
         {
             if (value.Length == 2)
             {
-                List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
-
                 int x = dict.IndexOf(value[0]);
                 int y = dict.IndexOf(value[1]);
 
@@ -44,10 +44,8 @@ namespace Language_Recognition_AI
             }
             else if(value.Length == 1)
             {
-                List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
-
                 int x = dict.IndexOf(value[0]);
-                int y = dict.IndexOf(' ');
+                int y = dict.IndexOf(" ");
 
                 matrix[x, y] += 1;
                 totalOccurencesCount++;
@@ -58,14 +56,12 @@ namespace Language_Recognition_AI
             }
         }
 
-        public override float GetPropability(string value)
+        public override float GetPropability(string[] value)
         {
             float result = 0;
 
             if (value.Length == 2)
             {
-                List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
-
                 int x = dict.IndexOf(value[0]);
                 int y = dict.IndexOf(value[1]);
 
@@ -92,10 +88,8 @@ namespace Language_Recognition_AI
             }
             else if(value.Length == 1)
             {
-                List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
-
                 int x = dict.IndexOf(value[0]);
-                int y = dict.IndexOf(' ');
+                int y = dict.IndexOf(" ");
 
                 if (x == -1)
                 {

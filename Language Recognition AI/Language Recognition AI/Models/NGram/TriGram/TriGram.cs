@@ -10,14 +10,16 @@ namespace Language_Recognition_AI
     {
         int[,,] matrix;
 
-        public TriGram(int size, Languages language) : base(size, language)
+        public TriGram(List<string> dict, Languages language) : base(dict, language)
         {
+            int size = dict.Count;
+
             matrix = new int[size, size, size];
 
             FillMatrix(size);
         }
 
-        public override void AddOccurence(string value)
+        public override void AddOccurence(string[] value)
         {
             int[] coords = GetCoords(value);
 
@@ -25,10 +27,11 @@ namespace Language_Recognition_AI
             totalOccurencesCount++;
         }
 
-        public override float GetPropability(string value)
+        public override float GetPropability(string[] value)
         {
             int[] coords = GetCoords(value);
 
+            // if case dows not exist
             foreach (var item in coords)
             {
                 if (item == -1)
@@ -40,17 +43,15 @@ namespace Language_Recognition_AI
             return matrix[coords[0], coords[1], coords[2]] / (float)totalOccurencesCount;
         }
 
-        private int[] GetCoords(string value)
+        private int[] GetCoords(string[] value)
         {
             int length = value.Length;
 
-            int[] coords = new int[3];
-
-            List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
+            int[] coords = new int[3];                      
             
-            coords[0] = dict.IndexOf(' ');
-            coords[1] = dict.IndexOf(' ');
-            coords[2] = dict.IndexOf(' ');
+            coords[0] = dict.IndexOf(" ");
+            coords[1] = dict.IndexOf(" ");
+            coords[2] = dict.IndexOf(" ");
 
             if (length >= 1)
             {

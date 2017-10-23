@@ -8,6 +8,9 @@ namespace Language_Recognition_AI
 {
     public interface IModel
     {
+        event EventHandler<EventArgsProgress> EventValidationProgress;
+        event EventHandler<EventArgsProgress> EventTrainingProgress;
+
         void Train(LanguageRecords[] languageRecords);
 
         Report Validate(LanguageRecords[] languageRecords);

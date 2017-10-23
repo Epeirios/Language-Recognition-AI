@@ -32,6 +32,8 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.tbLog = new System.Windows.Forms.TextBox();
+            this.pbTraining = new System.Windows.Forms.ProgressBar();
+            this.pbValidating = new System.Windows.Forms.ProgressBar();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +56,8 @@
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.pbValidating);
+            this.groupBox.Controls.Add(this.pbTraining);
             this.groupBox.Controls.Add(this.tbLog);
             this.groupBox.Controls.Add(this.tvControl);
             this.groupBox.Controls.Add(this.btnStart);
@@ -70,9 +74,24 @@
             this.tbLog.Location = new System.Drawing.Point(3, 203);
             this.tbLog.Multiline = true;
             this.tbLog.Name = "tbLog";
+            this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbLog.Size = new System.Drawing.Size(241, 81);
             this.tbLog.TabIndex = 3;
+            // 
+            // pbTraining
+            // 
+            this.pbTraining.Location = new System.Drawing.Point(6, 174);
+            this.pbTraining.Name = "pbTraining";
+            this.pbTraining.Size = new System.Drawing.Size(100, 23);
+            this.pbTraining.TabIndex = 4;
+            // 
+            // pbValidating
+            // 
+            this.pbValidating.Location = new System.Drawing.Point(112, 174);
+            this.pbValidating.Name = "pbValidating";
+            this.pbValidating.Size = new System.Drawing.Size(51, 23);
+            this.pbValidating.TabIndex = 5;
             // 
             // ModelControl
             // 
@@ -93,5 +112,7 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.TextBox tbLog;
+        private System.Windows.Forms.ProgressBar pbValidating;
+        private System.Windows.Forms.ProgressBar pbTraining;
     }
 }

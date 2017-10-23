@@ -40,16 +40,41 @@ namespace Language_Recognition_AI
             this.model = model;
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
-            //backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             this.modelName = modelName;
             groupBox.Text = modelName;
             AddLogRecord("--Initialized--");
+
+            model.EventValidationProgress += Model_EventValidationProgress;
+            model.EventTrainingProgress += Model_EventTrainingProgress;
         }
 
-        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Model_EventTrainingProgress(object sender, EventArgsProgress e)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, EventArgsProgress>(Model_EventTrainingProgress), sender, e);
+                return;
+            }
 
+            pbTraining.Value = e.Progress;
+        }
+
+        private void Model_EventValidationProgress(object sender, EventArgsProgress e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, EventArgsProgress>(Model_EventValidationProgress), sender, e);
+                return;
+            }
+
+            pbValidating.Value = e.Progress;
+        }
+
+        public void Runworker()
+        {
+            backgroundWorker.RunWorkerAsync();
+            btnStart.Enabled = false;
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -71,8 +96,7 @@ namespace Language_Recognition_AI
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            backgroundWorker.RunWorkerAsync();
-            btnStart.Enabled = false;
+            Runworker();
         }
 
         private void TrainModel()

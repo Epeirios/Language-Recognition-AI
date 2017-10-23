@@ -17,7 +17,7 @@ namespace Language_Recognition_AI
 
         public MainForm()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,6 +36,8 @@ namespace Language_Recognition_AI
             foreach (var modelControl in modelControls)
             {
                 flowLayoutPanel1.Controls.Add(modelControl);
+
+                modelControl.Runworker();
             }
         }
 

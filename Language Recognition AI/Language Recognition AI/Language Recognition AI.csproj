@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventArgsProgress.cs" />
     <Compile Include="Models\NGram\BiGram\BiGramModel.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Models\IModel.cs" />

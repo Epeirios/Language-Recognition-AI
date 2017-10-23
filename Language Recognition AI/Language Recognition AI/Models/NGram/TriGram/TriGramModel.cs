@@ -15,9 +15,11 @@ namespace Language_Recognition_AI
 
         public override void Train(LanguageRecords[] languageRecords)
         {
+            int progress = 0;
+
             foreach (LanguageRecords lRecords in languageRecords)
             {
-                TriGram trigram = new TriGram(lRecords.CharDictionary.Count, lRecords.Language);
+                TriGram trigram = new TriGram(lRecords.CharDictionary, lRecords.Language);
 
                 foreach (string record in lRecords.Records)
                 {
@@ -25,12 +27,18 @@ namespace Language_Recognition_AI
 
                     foreach (var item in parts)
                     {
-                        trigram.AddOccurence(item);
+                        trigram.AddOccurence(item.ToCharArray().Select(c => c.ToString()).ToArray());
                     }
                 }
 
+                progress += 100 / languageRecords.Length;
+
+                UpdateTrainingProgress(progress);
+
                 nGrams.Add(trigram);
             }
+
+            UpdateTrainingProgress(100);
         }
     }
 }
