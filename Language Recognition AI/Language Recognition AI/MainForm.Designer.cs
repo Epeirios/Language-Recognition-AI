@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.tvDataStats = new System.Windows.Forms.TreeView();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tbInputString = new System.Windows.Forms.TextBox();
             this.btnProcess = new System.Windows.Forms.Button();
             this.dgvResults = new System.Windows.Forms.DataGridView();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,14 +45,6 @@
             this.tvDataStats.ShowPlusMinus = false;
             this.tvDataStats.Size = new System.Drawing.Size(213, 374);
             this.tvDataStats.TabIndex = 0;
-            // 
-            // listView1
-            // 
-            this.listView1.Location = new System.Drawing.Point(231, 29);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1125, 374);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // label1
             // 
@@ -104,17 +96,24 @@
             this.dgvResults.Size = new System.Drawing.Size(846, 204);
             this.dgvResults.TabIndex = 6;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(234, 29);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1122, 374);
+            this.flowLayoutPanel1.TabIndex = 7;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1368, 676);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.tbInputString);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.tvDataStats);
             this.Name = "MainForm";
             this.Text = "Language Recognition AI";
@@ -128,11 +127,11 @@
         #endregion
 
         private System.Windows.Forms.TreeView tvDataStats;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbInputString;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.DataGridView dgvResults;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

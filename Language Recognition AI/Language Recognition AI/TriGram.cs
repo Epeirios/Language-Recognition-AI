@@ -19,12 +19,45 @@ namespace Language_Recognition_AI
 
         public override void AddOccurence(string value)
         {
-            throw new NotImplementedException();
+            int[] coords = GetCoords(value);
+
+            matrix[coords[0], coords[1], coords[2]] += 1;
+            totalOccurencesCount++;
         }
 
         public override float GetPropability(string value)
         {
-            throw new NotImplementedException();
+            int[] coords = GetCoords(value);
+
+            return matrix[coords[0], coords[1], coords[2]] / (float)totalOccurencesCount;
+        }
+
+        private int[] GetCoords(string value)
+        {
+            int length = value.Length;
+
+            int[] coords = new int[3];
+
+            List<char> dict = DataManager.Instance.TrainingData[(int)language].CharDictionary;
+
+            coords[0] = dict.IndexOf(' ');
+            coords[1] = dict.IndexOf(' ');
+            coords[2] = dict.IndexOf(' ');
+
+            if (length >= 1)
+            {
+                coords[0] = dict.IndexOf(value[0]);
+            }
+            if (length >= 2)
+            {
+                coords[1] = dict.IndexOf(value[1]);
+            }
+            if (length >= 3)
+            {
+                coords[2] = dict.IndexOf(value[2]);
+            }
+
+            return coords;
         }
 
         protected override void FillMatrix(int size)

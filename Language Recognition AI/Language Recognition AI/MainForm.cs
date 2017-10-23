@@ -22,7 +22,7 @@ namespace Language_Recognition_AI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            modelControls = new ModelControl[] { new ModelControl(new BiGramModel(), "BiGram") };
+            modelControls = new ModelControl[] { new ModelControl(new BiGramModel(), "BiGram"), new ModelControl(new TriGramModel(), "TriGram") };
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
@@ -35,7 +35,7 @@ namespace Language_Recognition_AI
         {
             foreach (var modelControl in modelControls)
             {
-                listView1.Controls.Add(modelControl);
+                flowLayoutPanel1.Controls.Add(modelControl);
             }
         }
 

@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Language_Recognition_AI
 {
-    public class BiGramModel : IModel
+    public class TriGramModel : IModel
     {
-        const int partlength = 2;
+        const int partlength = 3;
 
-        List<BiGram> BiGrams;
+        List<TriGram> TriGrams;
 
-        public BiGramModel()
+        public TriGramModel()
         {
-            BiGrams = new List<BiGram>();
+            TriGrams = new List<TriGram>();
         }
 
         public void Train(LanguageRecords[] languageRecords)
         {
             foreach (LanguageRecords lRecords in languageRecords)
             {
-                BiGram bigram = new BiGram(lRecords.CharDictionary.Count, lRecords.Language);
+                TriGram trigram = new TriGram(lRecords.CharDictionary.Count, lRecords.Language);
 
                 foreach (string record in lRecords.Records)
                 {
@@ -29,11 +29,11 @@ namespace Language_Recognition_AI
 
                     foreach (var item in parts)
                     {
-                        bigram.AddOccurence(item);
+                        trigram.AddOccurence(item);
                     }
                 }
 
-                BiGrams.Add(bigram);
+                TriGrams.Add(trigram);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Language_Recognition_AI
         {
             Dictionary<Languages, float> report = new Dictionary<Languages, float>();
 
-            foreach (var item in BiGrams)
+            foreach (var item in TriGrams)
             {
                 float propability = 0;
                 IEnumerable<string> parts = Utility.SplitInParts(sentence, partlength);
