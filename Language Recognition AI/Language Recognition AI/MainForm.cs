@@ -13,16 +13,40 @@ namespace Language_Recognition_AI
     public partial class MainForm : Form
     {
         private ModelControl[] modelControls;
+        private TrainingControl[] trainingControls;
         BackgroundWorker backgroundWorker;
 
         public MainForm()
         {
-            InitializeComponent();            
+            InitializeComponent();
+        }
+
+        public NGramModel GetNGramModel(string modelname)
+        {
+            if (modelname == "TriGramModel")
+            {
+                return new NGramModel(trainingControls[1].GetNGramMatrix, trainingControls[0].GetNGramMatrix);
+            }
+            else
+            {
+                return new NGramModel(trainingControls[2].GetNGramMatrix, trainingControls[1].GetNGramMatrix);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            modelControls = new ModelControl[] { new ModelControl(new BiGramModel(), "BiGram"), new ModelControl(new TriGramModel(), "TriGram") };
+            trainingControls = new TrainingControl[]
+            {
+                new TrainingControl(new BiGramMatrix(), "BiGram"),
+                new TrainingControl(new TriGramMatrix(), "TriGram"),
+                //new TrainingControl(new QuadGramMatrix(), "QuadGram")
+            };
+
+            modelControls = new ModelControl[]
+            {
+                new ModelControl("TriGramModel", this, GetNGramModel("TriGramModel")),
+                //new ModelControl("QuadGramModel", this, GetNGramModel("QuadGramModel")),
+            };
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
@@ -33,11 +57,15 @@ namespace Language_Recognition_AI
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            foreach (var trainingControl in trainingControls)
+            {
+                flpTraining.Controls.Add(trainingControl);
+                trainingControl.Train();
+            }
+
             foreach (var modelControl in modelControls)
             {
-                flowLayoutPanel1.Controls.Add(modelControl);
-
-                modelControl.Runworker();
+                flpModels.Controls.Add(modelControl);
             }
         }
 
@@ -81,17 +109,17 @@ namespace Language_Recognition_AI
 
             foreach (var modelcontrol in modelControls)
             {
-                float highestValue = 0.0f;
+                double highestValue = 0.0f;
 
                 List<string> cells = new List<string>();
-                
+
                 cells.Add(modelcontrol.ModelName);
 
-                Dictionary<Languages, float> propabilities = modelcontrol.Model.ValidateSentence(tbInputString.Text);
+                Dictionary<Languages, double> propabilities = modelcontrol.Model.ValidateSentence(tbInputString.Text);
 
                 foreach (var item in propabilities)
                 {
-                    float value = item.Value;
+                    double value = item.Value;
 
                     if (value > highestValue)
                     {

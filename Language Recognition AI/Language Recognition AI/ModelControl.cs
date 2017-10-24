@@ -14,6 +14,7 @@ namespace Language_Recognition_AI
     {
         IModel model;
         string modelName;
+        MainForm mainForm;
 
         BackgroundWorker backgroundWorker;
 
@@ -33,38 +34,42 @@ namespace Language_Recognition_AI
             }
         }
 
-        public ModelControl(IModel model, string modelName)
+        public IModel SetModel
+        {
+            set
+            {
+                model = value;
+            }
+        }
+
+        public ModelControl(string modelName, MainForm mainForm, IModel model)
         {
             InitializeComponent();
+
+            this.mainForm = mainForm;
 
             this.model = model;
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
 
             this.modelName = modelName;
             groupBox.Text = modelName;
             AddLogRecord("--Initialized--");
 
-            model.EventValidationProgress += Model_EventValidationProgress;
-            model.EventTrainingProgress += Model_EventTrainingProgress;
+            model.EventProgress += Model_EventProgress;
         }
 
-        private void Model_EventTrainingProgress(object sender, EventArgsProgress e)
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            btnValidate.Enabled = true;
+        }
+
+        private void Model_EventProgress(object sender, EventArgsProgress e)
         {
             if (InvokeRequired)
             {
-                Invoke(new Action<object, EventArgsProgress>(Model_EventTrainingProgress), sender, e);
-                return;
-            }
-
-            pbTraining.Value = e.Progress;
-        }
-
-        private void Model_EventValidationProgress(object sender, EventArgsProgress e)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action<object, EventArgsProgress>(Model_EventValidationProgress), sender, e);
+                Invoke(new Action<object, EventArgsProgress>(Model_EventProgress), sender, e);
                 return;
             }
 
@@ -73,13 +78,18 @@ namespace Language_Recognition_AI
 
         public void Runworker()
         {
+            model.EventProgress -= Model_EventProgress;
+
+            model = mainForm.GetNGramModel(modelName);
+
+            model.EventProgress += Model_EventProgress;
+
             backgroundWorker.RunWorkerAsync();
-            btnStart.Enabled = false;
+            btnValidate.Enabled = false;
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            TrainModel();
             ValidateModel();
         }
 
@@ -94,18 +104,9 @@ namespace Language_Recognition_AI
             this.InvokeEx(f => f.tbLog.AppendText(Environment.NewLine));
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private void btnValidate_Click(object sender, EventArgs e)
         {
             Runworker();
-        }
-
-        private void TrainModel()
-        {
-            AddLogRecord("Started:\t Training Model");
-
-            model.Train(DataManager.Instance.TrainingData);
-
-            AddLogRecord("Done:\t Training Model");
         }
 
         private void ValidateModel()

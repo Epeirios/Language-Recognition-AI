@@ -6,21 +6,42 @@ using System.Threading.Tasks;
 
 namespace Language_Recognition_AI
 {
-    public abstract class NGramModel : IModel
+    public class NGramModel : IModel
     {
-        public event EventHandler<EventArgsProgress> EventValidationProgress;
-        public event EventHandler<EventArgsProgress> EventTrainingProgress;
+        public event EventHandler<EventArgsProgress> EventProgress;
 
-        protected List<NGram> nGrams;
+        private NGramMatrix n1Grams;
+        private NGramMatrix n2Grams;
 
-        protected int partlength;
-
-        public NGramModel()
+        public NGramMatrix N1Grams
         {
-            nGrams = new List<NGram>();
+            get
+            {
+                return n1Grams;
+            }
+            set
+            {
+                n1Grams = value;
+            }
         }
 
-        public abstract void Train(LanguageRecords[] languageRecords);
+        public NGramMatrix N2Grams
+        {
+            get
+            {
+                return n2Grams;
+            }
+            set
+            {
+                n2Grams = value;
+            }
+        }
+
+        public NGramModel(NGramMatrix n1Grams, NGramMatrix n2Grams)
+        {
+            this.n1Grams = n1Grams;
+            this.n2Grams = n2Grams;
+        }
 
         public Report Validate(LanguageRecords[] languageRecords)
         {
@@ -32,7 +53,7 @@ namespace Language_Recognition_AI
             {
                 foreach (string record in lRecords.Records)
                 {
-                    Dictionary<Languages, float> report = ValidateSentence(record);
+                    Dictionary<Languages, double> report = ValidateSentence(record);
 
                     Languages language = report.FirstOrDefault(x => x.Value == report.Values.Max()).Key;
 
@@ -40,42 +61,53 @@ namespace Language_Recognition_AI
                 }
 
                 progress += 100 / languageRecords.Length;
-                UpdateValidationProgress(progress);
+                UpdateProgress(progress);
             }
 
-            UpdateValidationProgress(100);
+            UpdateProgress(100);
 
             return confusionReport;
         }
 
-        protected void UpdateValidationProgress(int progress)
+        private void UpdateProgress(int progress)
         {
-            EventValidationProgress(this, new EventArgsProgress(progress));
+            EventProgress(this, new EventArgsProgress(progress));
         }
 
-        protected void UpdateTrainingProgress(int progress)
+        public Dictionary<Languages, double> ValidateSentence(string sentence)
         {
-            EventTrainingProgress(this, new EventArgsProgress(progress));
-        }
+            Dictionary<Languages, double> report = new Dictionary<Languages, double>();
 
-        public Dictionary<Languages, float> ValidateSentence(string sentence)
-        {
-            Dictionary<Languages, float> report = new Dictionary<Languages, float>();
+            Dictionary<Languages, double> productn1 = GetNgramProduct(n1Grams, sentence);
+            Dictionary<Languages, double> productn2 = GetNgramProduct(n2Grams, sentence, true);
 
-            foreach (var item in nGrams)
+            foreach (var item in productn1.Keys)
             {
-                float propability = 0;
-                IEnumerable<string> parts = Utility.SplitInParts(sentence, partlength);
-
-                foreach (string part in parts)
-                {
-                    propability += item.GetPropability(part.ToCharArray().Select(c => c.ToString()).ToArray());
-                }
-
-                report.Add(item.Language, propability);
+                report.Add(item, productn1[item] / productn2[item]);
             }
 
             return report;
+        }
+
+        private Dictionary<Languages, double> GetNgramProduct(NGramMatrix nGrams, string sentence, bool b = false)
+        {
+            Dictionary<Languages, double> products = new Dictionary<Languages, double>();
+
+            foreach (var nGram in nGrams.NGrams)
+            {
+                double product = 1.0f;
+
+                IEnumerable<string> parts = Utility.SplitInParts(sentence, nGram.NgramSize, b);
+
+                foreach (string part in parts)
+                {
+                    product *= 1 + nGram.GetPropability(part.ToCharArray().Select(c => c.ToString()).ToArray());
+                }
+
+                products.Add(nGram.Language, product);
+            }
+
+            return products;
         }
     }
 }

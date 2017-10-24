@@ -46,7 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgsProgress.cs" />
-    <Compile Include="Models\NGram\BiGram\BiGramModel.cs" />
+    <Compile Include="IProgress.cs" />
+    <Compile Include="Models\NGram\BiGram.cs" />
+    <Compile Include="Models\NGram\BiGramMatrix.cs" />
+    <Compile Include="Models\NGram\NGramMatrix.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Languages.cs" />
@@ -57,7 +60,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LanguageRecords.cs" />
-    <Compile Include="Models\NGram\BiGram\BiGram.cs" />
+    <Compile Include="Models\NGram\QuadGram.cs" />
     <Compile Include="ModelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -66,11 +69,18 @@
     </Compile>
     <Compile Include="Models\NGram\NGram.cs" />
     <Compile Include="Models\NGram\NGramModel.cs" />
+    <Compile Include="Models\NGram\QuadGramMatrix.cs" />
+    <Compile Include="Models\NGram\TriGramMatrix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report.cs" />
-    <Compile Include="Models\NGram\TriGram\TriGram.cs" />
-    <Compile Include="Models\NGram\TriGram\TriGramModel.cs" />
+    <Compile Include="Models\NGram\TriGram.cs" />
+    <Compile Include="TrainingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TrainingControl.Designer.cs">
+      <DependentUpon>TrainingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -88,6 +98,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TrainingControl.resx">
+      <DependentUpon>TrainingControl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

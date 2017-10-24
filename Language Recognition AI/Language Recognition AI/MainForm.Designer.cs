@@ -34,7 +34,9 @@
             this.tbInputString = new System.Windows.Forms.TextBox();
             this.btnProcess = new System.Windows.Forms.Button();
             this.dgvResults = new System.Windows.Forms.DataGridView();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpModels = new System.Windows.Forms.FlowLayoutPanel();
+            this.flpTraining = new System.Windows.Forms.FlowLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,20 +51,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 13);
+            this.label1.Location = new System.Drawing.Point(9, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Data";
+            this.label1.Text = "Processing Data";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(231, 12);
+            this.label2.Location = new System.Drawing.Point(507, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Models";
+            this.label2.Text = "Model Stats";
             // 
             // tbInputString
             // 
@@ -96,19 +98,37 @@
             this.dgvResults.Size = new System.Drawing.Size(846, 204);
             this.dgvResults.TabIndex = 6;
             // 
-            // flowLayoutPanel1
+            // flpModels
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(234, 29);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1122, 374);
-            this.flowLayoutPanel1.TabIndex = 7;
+            this.flpModels.Location = new System.Drawing.Point(510, 29);
+            this.flpModels.Name = "flpModels";
+            this.flpModels.Size = new System.Drawing.Size(846, 374);
+            this.flpModels.TabIndex = 7;
+            // 
+            // flpTraining
+            // 
+            this.flpTraining.Location = new System.Drawing.Point(231, 29);
+            this.flpTraining.Name = "flpTraining";
+            this.flpTraining.Size = new System.Drawing.Size(273, 374);
+            this.flpTraining.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(231, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Training Progress";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1368, 676);
-            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.flpTraining);
+            this.Controls.Add(this.flpModels);
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.tbInputString);
@@ -132,6 +152,8 @@
         private System.Windows.Forms.TextBox tbInputString;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.DataGridView dgvResults;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flpModels;
+        private System.Windows.Forms.FlowLayoutPanel flpTraining;
+        private System.Windows.Forms.Label label3;
     }
 }

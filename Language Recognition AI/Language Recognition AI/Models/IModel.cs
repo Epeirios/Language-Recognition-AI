@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace Language_Recognition_AI
 {
-    public interface IModel
+    public interface IModel : IProgress
     {
-        event EventHandler<EventArgsProgress> EventValidationProgress;
-        event EventHandler<EventArgsProgress> EventTrainingProgress;
+        NGramMatrix N1Grams { get; set; }
 
-        void Train(LanguageRecords[] languageRecords);
+        NGramMatrix N2Grams { get; set; }
 
         Report Validate(LanguageRecords[] languageRecords);
 
-        Dictionary<Languages, float> ValidateSentence(string sentence);
+        Dictionary<Languages, double> ValidateSentence(string sentence);
     }
 }

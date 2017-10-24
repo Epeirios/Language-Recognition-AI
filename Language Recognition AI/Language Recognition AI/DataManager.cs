@@ -68,10 +68,9 @@ namespace Language_Recognition_AI
                 if (cur.Length == 2)
                 {
                     string lang = cur[1];
-                    if (lang.Length == 5)
-                    {
-                        lang = lang.Remove(2, 1);
-                    }
+
+                    lang = lang.Replace("\r", string.Empty);
+                    lang = lang.Replace("-", string.Empty);
 
                     if (languages.Contains(lang))
                     {

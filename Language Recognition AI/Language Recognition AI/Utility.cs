@@ -9,15 +9,27 @@ namespace Language_Recognition_AI
 {
     public static class Utility
     {
-        public static IEnumerable<String> SplitInParts(this String s, Int32 partLength)
+        public static string[] SplitInParts(this String str, Int32 partLength, bool b = false)
         {
-            if (s == null)
+            List<string> output = new List<string>();
+
+            if (str == null)
                 throw new ArgumentNullException("s");
             if (partLength <= 0)
                 throw new ArgumentException("Part length has to be positive.", "partLength");
 
-            for (var i = 0; i < s.Length; i += partLength)
-                yield return s.Substring(i, Math.Min(partLength, s.Length - i));
+            for (int i = 0; i < str.Length - partLength; i++)
+            {
+                output.Add(str.Substring(i, partLength));
+            }
+
+            if (b)
+            {
+                output.RemoveAt(0);
+                output.RemoveAt(output.Count - 1);
+            }
+
+            return output.ToArray();
         }
 
         public static void InvokeEx<T>(this T @this, Action<T> action) where T : ISynchronizeInvoke

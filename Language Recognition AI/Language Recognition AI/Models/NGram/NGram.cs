@@ -18,7 +18,15 @@ namespace Language_Recognition_AI
             {
                 return language;
             }
+            set
+            {
+                language = value;
+            }
         }
+
+        public abstract List<string> Dict { set; get; }
+
+        public abstract int NgramSize { get; }
 
         public int TotalOccurences
         {
@@ -28,16 +36,15 @@ namespace Language_Recognition_AI
             }
         }
 
-        public NGram(List<string> dict, Languages language)
+        public NGram()
         {
-            this.dict = dict;
-            this.language = language;
+
         }
 
         protected abstract void FillMatrix(int size);
 
         public abstract void AddOccurence(string[] value);
 
-        public abstract float GetPropability(string[] value);
+        public abstract double GetPropability(string[] value);
     }
 }
