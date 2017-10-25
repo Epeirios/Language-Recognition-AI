@@ -286,3 +286,5 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+Language Recognition AI/Language Recognition AI/Data/sentences\.cvs
