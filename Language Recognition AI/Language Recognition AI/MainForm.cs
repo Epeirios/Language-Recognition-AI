@@ -13,39 +13,23 @@ namespace Language_Recognition_AI
     public partial class MainForm : Form
     {
         private ModelControl[] modelControls;
-        private TrainingControl[] trainingControls;
         BackgroundWorker backgroundWorker;
+        DataManager dataManager;
 
         public MainForm()
         {
             InitializeComponent();
         }
 
-        public NGramModel GetNGramModel(string modelname)
-        {
-            if (modelname == "TriGramModel")
-            {
-                return new NGramModel(trainingControls[1].GetNGramMatrix, trainingControls[0].GetNGramMatrix);
-            }
-            else
-            {
-                return new NGramModel(trainingControls[2].GetNGramMatrix, trainingControls[1].GetNGramMatrix);
-            }
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            trainingControls = new TrainingControl[]
-            {
-                new TrainingControl(new BiGramMatrix(), "BiGram"),
-                new TrainingControl(new TriGramMatrix(), "TriGram"),
-                //new TrainingControl(new QuadGramMatrix(), "QuadGram")
-            };
-
+            this.dataManager = new DataManager();
+            dataManager.EventProgress += DataManager_EventProgress;
+            
             modelControls = new ModelControl[]
             {
-                new ModelControl("TriGramModel", this, GetNGramModel("TriGramModel")),
-                //new ModelControl("QuadGramModel", this, GetNGramModel("QuadGramModel")),
+                new ModelControl("TriGramModel", new NGramModel(new TriGramMatrix(), new BiGramMatrix()), dataManager),
+                new ModelControl("QuadGramModel", new NGramModel(new QuadGramMatrix(), new TriGramMatrix()), dataManager),
             };
 
             backgroundWorker = new BackgroundWorker();
@@ -55,28 +39,35 @@ namespace Language_Recognition_AI
             backgroundWorker.RunWorkerAsync();
         }
 
-        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void DataManager_EventProgress(object sender, EventArgsProgress e)
         {
-            foreach (var trainingControl in trainingControls)
+            if (InvokeRequired)
             {
-                flpTraining.Controls.Add(trainingControl);
-                trainingControl.Train();
+                Invoke(new Action<object, EventArgsProgress>(DataManager_EventProgress), sender, e);
+                return;
             }
 
+            pbDataLoading.Value = e.Progress;
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             foreach (var modelControl in modelControls)
             {
                 flpModels.Controls.Add(modelControl);
+                modelControl.Runworker();
             }
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            dataManager.ProcessData();
             FillTvStats();
         }
 
         private void FillTvStats()
         {
-            LanguageRecords[] trainingData = DataManager.Instance.TrainingData;
+            LanguageRecords[] trainingData = dataManager.TrainingData;
 
             foreach (var item in trainingData)
             {

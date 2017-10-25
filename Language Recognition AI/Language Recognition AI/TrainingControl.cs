@@ -13,8 +13,6 @@ namespace Language_Recognition_AI
     public partial class TrainingControl : UserControl
     {
         string name;
-        NGramMatrix ngramMatrix;
-        BackgroundWorker backgroundWorker;
 
         public string GetMatrixName
         {
@@ -24,47 +22,19 @@ namespace Language_Recognition_AI
             }
         }
 
-        public NGramMatrix GetNGramMatrix
-        {
-            get
-            {
-                return ngramMatrix;
-            }
-        }
-
-        public TrainingControl(NGramMatrix ngramMatrix, string name)
+        public TrainingControl(string name)
         {
             InitializeComponent();
-
-            this.ngramMatrix = ngramMatrix;
-            groupBox.Text = name;
+            lblName.Text = name;
             this.name = name;
-
-            ngramMatrix.EventProgress += NGramMatrix_EventProgress;
-
-            backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += BackgroundWorker_DoWork;
         }
 
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        public void UpdateProgress(int progress)
         {
-            ngramMatrix.Train(DataManager.Instance.TrainingData);
-        }
-
-        public void Train()
-        {
-            backgroundWorker.RunWorkerAsync();
-        }
-
-        private void NGramMatrix_EventProgress(object sender, EventArgsProgress e)
-        {
-            if (InvokeRequired)
+            if (progress <= 100 && progress >= 0)
             {
-                Invoke(new Action<object, EventArgsProgress>(NGramMatrix_EventProgress), sender, e);
-                return;
+                pbTraining.Value = progress;
             }
-
-            pbTraining.Value = e.Progress;
         }
     }
 }

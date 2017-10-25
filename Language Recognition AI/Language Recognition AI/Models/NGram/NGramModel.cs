@@ -78,33 +78,54 @@ namespace Language_Recognition_AI
         {
             Dictionary<Languages, double> report = new Dictionary<Languages, double>();
 
-            Dictionary<Languages, double> productn1 = GetNgramProduct(n1Grams, sentence);
-            Dictionary<Languages, double> productn2 = GetNgramProduct(n2Grams, sentence, true);
+            Dictionary<Languages, double> products = GetNgramProduct(n1Grams, n2Grams, sentence);
 
-            foreach (var item in productn1.Keys)
+            foreach (var key in products.Keys)
             {
-                report.Add(item, productn1[item] / productn2[item]);
+                report.Add(key, products[key]);
             }
 
             return report;
         }
 
-        private Dictionary<Languages, double> GetNgramProduct(NGramMatrix nGrams, string sentence, bool b = false)
+        private Dictionary<Languages, double> GetNgramProduct(NGramMatrix n1GramsMatrix, NGramMatrix n2GramsMatrix, string sentence)
         {
             Dictionary<Languages, double> products = new Dictionary<Languages, double>();
 
-            foreach (var nGram in nGrams.NGrams)
+            for (int i = 0; i < n1GramsMatrix.NGrams.Count; i++)
             {
                 double product = 1.0f;
 
-                IEnumerable<string> parts = Utility.SplitInParts(sentence, nGram.NgramSize, b);
+                NGram n1Gram = n1GramsMatrix.NGrams[i];
+                NGram n2Gram = n2GramsMatrix.NGrams[i];
 
-                foreach (string part in parts)
+                string[] partsN1 = Utility.SplitInParts(sentence, n1Gram.NgramSize);
+                string[] partsN2 = Utility.SplitInParts(sentence, n2Gram.NgramSize, true);
+
+                if (partsN1.Length > 1)
                 {
-                    product *= 1 + nGram.GetPropability(part.ToCharArray().Select(c => c.ToString()).ToArray());
+                    for (int j = 0; j < partsN2.Length; j++)
+                    {
+                        double prob1 = n1Gram.GetPropability(partsN1[j]);
+                        double prob2 = n2Gram.GetPropability(partsN2[j]);
+
+                        double calc = prob1 / prob2;
+
+                        product *= 1 + calc;
+                    }
+
+                    product *= n1Gram.GetPropability(partsN1[partsN1.Length - 1]);
+                }
+                else if (partsN1.Length == 1)
+                {
+                    product = n1Gram.GetPropability(partsN1[0]);
+                }
+                else
+                {
+                    product = 0;
                 }
 
-                products.Add(nGram.Language, product);
+                products.Add(n1Gram.Language, 1 / product);
             }
 
             return products;

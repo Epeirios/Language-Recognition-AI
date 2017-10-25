@@ -35,16 +35,15 @@ namespace Language_Recognition_AI
             {
                 T ngram = new T();
 
-                ngram.Dict = lRecords.CharDictionary;
                 ngram.Language = lRecords.Language;
 
                 foreach (string record in lRecords.Records)
                 {
                     IEnumerable<string> parts = Utility.SplitInParts(record, ngram.NgramSize);
 
-                    foreach (var item in parts)
+                    foreach (var part in parts)
                     {
-                        ngram.AddOccurence(item.ToCharArray().Select(c => c.ToString()).ToArray());
+                        ngram.AddOccurence(part);
                     }
                 }
 

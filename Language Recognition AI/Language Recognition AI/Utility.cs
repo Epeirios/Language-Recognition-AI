@@ -25,6 +25,11 @@ namespace Language_Recognition_AI
 
             if (b)
             {
+                if (output.Count <= 2)
+                {
+                    return new string[] { };
+                }
+
                 output.RemoveAt(0);
                 output.RemoveAt(output.Count - 1);
             }

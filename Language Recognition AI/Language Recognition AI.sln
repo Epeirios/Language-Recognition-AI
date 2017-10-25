@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Language Recognition AI", "Language Recognition AI\Language Recognition AI.csproj", "{F747B400-9DB2-489A-8EC6-8424AE39E0DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProcessor", "DataProcessor\DataProcessor.csproj", "{98988396-4E45-44EB-9023-11C3D0A6D923}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F747B400-9DB2-489A-8EC6-8424AE39E0DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F747B400-9DB2-489A-8EC6-8424AE39E0DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F747B400-9DB2-489A-8EC6-8424AE39E0DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98988396-4E45-44EB-9023-11C3D0A6D923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98988396-4E45-44EB-9023-11C3D0A6D923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98988396-4E45-44EB-9023-11C3D0A6D923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98988396-4E45-44EB-9023-11C3D0A6D923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

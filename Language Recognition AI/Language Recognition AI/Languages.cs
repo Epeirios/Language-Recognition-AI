@@ -8,11 +8,13 @@ namespace Language_Recognition_AI
 {
     public enum Languages
     {
-        bs,
-        id,
-        ptPT,
-        ptBR,
-        frCA,
-        frFR,
+        deu,
+        rus,
+        fra,
+        eng,
+        ita,
+        epo,
+        spa,
+        por,
     }
 }

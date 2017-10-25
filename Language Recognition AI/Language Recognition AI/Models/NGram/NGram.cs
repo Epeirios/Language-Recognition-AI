@@ -8,9 +8,9 @@ namespace Language_Recognition_AI
 {
     public abstract class NGram
     {
-        protected int totalOccurencesCount = 0;
+        protected int totalOccurencesCount;
         protected Languages language;
-        protected List<string> dict;
+        Dictionary<string, int> matrix;
 
         public Languages Language
         {
@@ -24,8 +24,6 @@ namespace Language_Recognition_AI
             }
         }
 
-        public abstract List<string> Dict { set; get; }
-
         public abstract int NgramSize { get; }
 
         public int TotalOccurences
@@ -38,13 +36,34 @@ namespace Language_Recognition_AI
 
         public NGram()
         {
-
+            totalOccurencesCount = 0;
+            matrix = new Dictionary<string, int>();
         }
 
-        protected abstract void FillMatrix(int size);
+        public void AddOccurence(string value)
+        {
+            if (matrix.ContainsKey(value))
+            {
+                matrix[value]++;
+            }
+            else
+            {
+                matrix.Add(value, 1);
+            }
 
-        public abstract void AddOccurence(string[] value);
+            totalOccurencesCount++;
+        }
 
-        public abstract double GetPropability(string[] value);
+        public double GetPropability(string value)
+        {
+            if (matrix.ContainsKey(value))
+            {
+                return matrix[value] / (double)totalOccurencesCount;
+            }
+            else
+            {
+                return 1 / (double)totalOccurencesCount + 1;
+            }
+        }
     }
 }

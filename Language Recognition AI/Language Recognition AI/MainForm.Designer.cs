@@ -35,17 +35,16 @@
             this.btnProcess = new System.Windows.Forms.Button();
             this.dgvResults = new System.Windows.Forms.DataGridView();
             this.flpModels = new System.Windows.Forms.FlowLayoutPanel();
-            this.flpTraining = new System.Windows.Forms.FlowLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.pbDataLoading = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
             this.SuspendLayout();
             // 
             // tvDataStats
             // 
-            this.tvDataStats.Location = new System.Drawing.Point(12, 29);
+            this.tvDataStats.Location = new System.Drawing.Point(12, 42);
             this.tvDataStats.Name = "tvDataStats";
             this.tvDataStats.ShowPlusMinus = false;
-            this.tvDataStats.Size = new System.Drawing.Size(213, 374);
+            this.tvDataStats.Size = new System.Drawing.Size(213, 361);
             this.tvDataStats.TabIndex = 0;
             // 
             // label1
@@ -60,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(507, 13);
+            this.label2.Location = new System.Drawing.Point(230, 13);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 3;
@@ -68,15 +67,15 @@
             // 
             // tbInputString
             // 
-            this.tbInputString.Location = new System.Drawing.Point(12, 460);
+            this.tbInputString.Location = new System.Drawing.Point(12, 438);
             this.tbInputString.Multiline = true;
             this.tbInputString.Name = "tbInputString";
-            this.tbInputString.Size = new System.Drawing.Size(411, 204);
+            this.tbInputString.Size = new System.Drawing.Size(902, 67);
             this.tbInputString.TabIndex = 4;
             // 
             // btnProcess
             // 
-            this.btnProcess.Location = new System.Drawing.Point(429, 553);
+            this.btnProcess.Location = new System.Drawing.Point(920, 436);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(75, 23);
             this.btnProcess.TabIndex = 5;
@@ -92,42 +91,33 @@
             this.dgvResults.AllowUserToResizeRows = false;
             this.dgvResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvResults.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvResults.Location = new System.Drawing.Point(510, 460);
+            this.dgvResults.Location = new System.Drawing.Point(12, 511);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.ReadOnly = true;
-            this.dgvResults.Size = new System.Drawing.Size(846, 204);
+            this.dgvResults.Size = new System.Drawing.Size(983, 111);
             this.dgvResults.TabIndex = 6;
             // 
             // flpModels
             // 
-            this.flpModels.Location = new System.Drawing.Point(510, 29);
+            this.flpModels.AutoScroll = true;
+            this.flpModels.Location = new System.Drawing.Point(233, 29);
             this.flpModels.Name = "flpModels";
-            this.flpModels.Size = new System.Drawing.Size(846, 374);
+            this.flpModels.Size = new System.Drawing.Size(762, 374);
             this.flpModels.TabIndex = 7;
             // 
-            // flpTraining
+            // pbDataLoading
             // 
-            this.flpTraining.Location = new System.Drawing.Point(231, 29);
-            this.flpTraining.Name = "flpTraining";
-            this.flpTraining.Size = new System.Drawing.Size(273, 374);
-            this.flpTraining.TabIndex = 8;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(231, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(89, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Training Progress";
+            this.pbDataLoading.Location = new System.Drawing.Point(100, 13);
+            this.pbDataLoading.Name = "pbDataLoading";
+            this.pbDataLoading.Size = new System.Drawing.Size(127, 23);
+            this.pbDataLoading.TabIndex = 10;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1368, 676);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.flpTraining);
+            this.ClientSize = new System.Drawing.Size(1007, 634);
+            this.Controls.Add(this.pbDataLoading);
             this.Controls.Add(this.flpModels);
             this.Controls.Add(this.dgvResults);
             this.Controls.Add(this.btnProcess);
@@ -153,7 +143,6 @@
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.DataGridView dgvResults;
         private System.Windows.Forms.FlowLayoutPanel flpModels;
-        private System.Windows.Forms.FlowLayoutPanel flpTraining;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ProgressBar pbDataLoading;
     }
 }

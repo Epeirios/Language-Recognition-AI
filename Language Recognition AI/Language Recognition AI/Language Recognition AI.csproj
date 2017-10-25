@@ -101,6 +101,9 @@
     <EmbeddedResource Include="TrainingControl.resx">
       <DependentUpon>TrainingControl.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="Data\sentences.cvs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,10 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DSL-TRAIN.txt" />
-    <EmbeddedResource Include="DSL-DEV.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,7 +14,7 @@ namespace Language_Recognition_AI
     {
         IModel model;
         string modelName;
-        MainForm mainForm;
+        DataManager dataManager;
 
         BackgroundWorker backgroundWorker;
 
@@ -42,11 +42,10 @@ namespace Language_Recognition_AI
             }
         }
 
-        public ModelControl(string modelName, MainForm mainForm, IModel model)
+        public ModelControl(string modelName, IModel model, DataManager dataManager)
         {
             InitializeComponent();
-
-            this.mainForm = mainForm;
+            this.dataManager = dataManager;
 
             this.model = model;
             backgroundWorker = new BackgroundWorker();
@@ -55,14 +54,42 @@ namespace Language_Recognition_AI
 
             this.modelName = modelName;
             groupBox.Text = modelName;
-            AddLogRecord("--Initialized--");
+
+            flpTraining.Controls.AddRange(new Control[]{
+                new TrainingControl("Ngram 1"),
+                new TrainingControl("Ngram 2"),
+            });
 
             model.EventProgress += Model_EventProgress;
+            model.N1Grams.EventProgress += N1Grams_EventProgress;
+            model.N2Grams.EventProgress += N2Grams_EventProgress;
+        }
+
+        private void N2Grams_EventProgress(object sender, EventArgsProgress e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, EventArgsProgress>(N2Grams_EventProgress), sender, e);
+                return;
+            }
+
+            ((TrainingControl)(flpTraining.Controls[1])).UpdateProgress(e.Progress);
+        }
+
+        private void N1Grams_EventProgress(object sender, EventArgsProgress e)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<object, EventArgsProgress>(N1Grams_EventProgress), sender, e);
+                return;
+            }
+
+            ((TrainingControl)(flpTraining.Controls[0])).UpdateProgress(e.Progress);
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            btnValidate.Enabled = true;
+            
         }
 
         private void Model_EventProgress(object sender, EventArgsProgress e)
@@ -78,30 +105,20 @@ namespace Language_Recognition_AI
 
         public void Runworker()
         {
-            model.EventProgress -= Model_EventProgress;
-
-            model = mainForm.GetNGramModel(modelName);
-
-            model.EventProgress += Model_EventProgress;
-
             backgroundWorker.RunWorkerAsync();
-            btnValidate.Enabled = false;
         }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            model.N1Grams.Train(dataManager.TrainingData);
+            model.N2Grams.Train(dataManager.TrainingData);
+
             ValidateModel();
         }
 
         private void AddNode(string nodeName)
         {
             this.InvokeEx(f => f.tvControl.Nodes.Add(nodeName));
-        }
-
-        private void AddLogRecord(string record)
-        {
-            this.InvokeEx(f => f.tbLog.AppendText((record)));
-            this.InvokeEx(f => f.tbLog.AppendText(Environment.NewLine));
         }
 
         private void btnValidate_Click(object sender, EventArgs e)
@@ -111,17 +128,14 @@ namespace Language_Recognition_AI
 
         private void ValidateModel()
         {
-            AddLogRecord("Started:\t Validating Model");
+            tvControl.Nodes.Clear();
+            pbValidating.Value = 0;
 
-            Report report = model.Validate(DataManager.Instance.ValidationData);
-
-            AddLogRecord("Done:\t Validating Model");
+            Report report = model.Validate(dataManager.ValidationData);
 
             AddNode(string.Format("Number of Cases: {0}", report.CountCases));
             AddNode(string.Format("Cases Correct: {0}", report.CountCorrect));
             AddNode(string.Format("Cases Incorrect: {0}", report.CountIncorrect));
-
-            AddLogRecord("Report:\t Validation Model");
         }
     }
 }

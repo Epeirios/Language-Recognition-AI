@@ -59,27 +59,5 @@ namespace Language_Recognition_AI.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ministar unutarnjih poslova Mohamed Ibrahim, koji je u septembru preživio pokušaj ubistva, naredio je policiji da se odlučno suprotstavi svakom pokušaju kršenja zakona, prenosi Mena.	bs
-        ///Također, upriličen je i trilateralni sastanak ministara vanjskih poslova Bosne i Hercegovine, Republike Srbije i Republike Turske tokom kojeg je dr. Lagumdžija sa ministrima Ivanom Mrkićem i Ahmetom Davutoğluom razgovarao o trilateralnom sastanku na nivou ministara vanjskih poslova koji bi se trebao održati u Beogradu krajem [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string DSL_DEV {
-            get {
-                return ResourceManager.GetString("DSL_DEV", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to - 57,5 miliona maloljetnih djevojčica prisilno stupi u brak širom svijeta, dok čak 40 odsto od tog broja čine maloljetne Indijke.	bs
-        ///- Nakon ovih kalkulacija, ubrzo je postalo jasno da izuzetno velike zvijezde nisu nikakva misterija – kaže Sambaran.	bs
-        ///U okviru programa Modul Memorije Internacionalnog teatarskog festivala MESS danas u 20 sati na sceni Sarajevskog ratnog teatra – SARTR bit će izvedena predstava DAH teatra „Prelazeći liniju“, u režiji Dijane Milošević.	bs
-        ///Sagrađen je po istom principu kao i s [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string DSL_TRAIN {
-            get {
-                return ResourceManager.GetString("DSL_TRAIN", resourceCulture);
-            }
-        }
     }
 }

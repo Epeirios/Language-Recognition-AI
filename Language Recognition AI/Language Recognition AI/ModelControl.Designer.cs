@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.tvControl = new System.Windows.Forms.TreeView();
-            this.btnValidate = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.pbValidating = new System.Windows.Forms.ProgressBar();
-            this.tbLog = new System.Windows.Forms.TextBox();
+            this.flpTraining = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,25 +41,16 @@
             // 
             this.tvControl.Location = new System.Drawing.Point(3, 19);
             this.tvControl.Name = "tvControl";
-            this.tvControl.Size = new System.Drawing.Size(244, 130);
+            this.tvControl.Size = new System.Drawing.Size(244, 106);
             this.tvControl.TabIndex = 0;
-            // 
-            // btnValidate
-            // 
-            this.btnValidate.Location = new System.Drawing.Point(169, 174);
-            this.btnValidate.Name = "btnValidate";
-            this.btnValidate.Size = new System.Drawing.Size(75, 23);
-            this.btnValidate.TabIndex = 1;
-            this.btnValidate.Text = "Validate";
-            this.btnValidate.UseVisualStyleBackColor = true;
-            this.btnValidate.Click += new System.EventHandler(this.btnValidate_Click);
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.label2);
+            this.groupBox.Controls.Add(this.label1);
+            this.groupBox.Controls.Add(this.flpTraining);
             this.groupBox.Controls.Add(this.pbValidating);
-            this.groupBox.Controls.Add(this.tbLog);
             this.groupBox.Controls.Add(this.tvControl);
-            this.groupBox.Controls.Add(this.btnValidate);
             this.groupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox.Location = new System.Drawing.Point(0, 0);
             this.groupBox.Name = "groupBox";
@@ -69,20 +61,36 @@
             // 
             // pbValidating
             // 
-            this.pbValidating.Location = new System.Drawing.Point(3, 174);
+            this.pbValidating.Location = new System.Drawing.Point(65, 261);
             this.pbValidating.Name = "pbValidating";
-            this.pbValidating.Size = new System.Drawing.Size(160, 23);
+            this.pbValidating.Size = new System.Drawing.Size(182, 23);
             this.pbValidating.TabIndex = 5;
             // 
-            // tbLog
+            // flpTraining
             // 
-            this.tbLog.Location = new System.Drawing.Point(3, 203);
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.ReadOnly = true;
-            this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(241, 81);
-            this.tbLog.TabIndex = 3;
+            this.flpTraining.AutoScroll = true;
+            this.flpTraining.Location = new System.Drawing.Point(3, 144);
+            this.flpTraining.Name = "flpTraining";
+            this.flpTraining.Size = new System.Drawing.Size(244, 111);
+            this.flpTraining.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 128);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Training";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 261);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Validating";
             // 
             // ModelControl
             // 
@@ -100,9 +108,10 @@
         #endregion
 
         private System.Windows.Forms.TreeView tvControl;
-        private System.Windows.Forms.Button btnValidate;
         private System.Windows.Forms.GroupBox groupBox;
-        private System.Windows.Forms.TextBox tbLog;
         private System.Windows.Forms.ProgressBar pbValidating;
+        private System.Windows.Forms.FlowLayoutPanel flpTraining;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
