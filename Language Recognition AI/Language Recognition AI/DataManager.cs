@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,12 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Language_Recognition_AI
+namespace DataManager
 {
     public class DataManager
     {
-        public event EventHandler<EventArgsProgress> EventProgress;
-
         string dataPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\sentences.cvs");
 
         private LanguageRecords[] trainingData;
@@ -40,9 +39,6 @@ namespace Language_Recognition_AI
 
         public void ProcessData()
         {
-            int linecount = 0;
-            int progress = 0;
-
             int[] counts =
             {
                 392501,
@@ -98,23 +94,10 @@ namespace Language_Recognition_AI
                 {
                     throw new Exception();
                 }
-
-                linecount++;
-
-                if ((linecount % (totalcount / 100)) == 0)
-                {
-                    progress++;
-                    UpdateProgress(progress);
-                }
             }
 
             this.trainingData = trainingData;
             this.validationData = validationData;
-        }
-
-        protected void UpdateProgress(int progress)
-        {
-            EventProgress(this, new EventArgsProgress(progress));
         }
     }
 }

@@ -4,27 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Language_Recognition_AI
+namespace NGram
 {
-    public abstract class NGram
+    public class NGram
     {
-        protected int totalOccurencesCount;
-        protected Languages language;
-        Dictionary<string, int> matrix;
+        int totalOccurencesCount;
+        int ngramsize;
+        string language;
+        Dictionary<string, int> ngramMatrix;
 
-        public Languages Language
+        public string Language
         {
             get
             {
                 return language;
             }
-            set
-            {
-                language = value;
-            }
         }
 
-        public abstract int NgramSize { get; }
+        public int NGramSize
+        {
+            get
+            {
+                return ngramsize;
+            }
+        }
 
         public int TotalOccurences
         {
@@ -34,21 +37,24 @@ namespace Language_Recognition_AI
             }
         }
 
-        public NGram()
+        public NGram(int ngramsize, string language)
         {
+            this.ngramsize = ngramsize;
+            this.language = language;
+
             totalOccurencesCount = 0;
-            matrix = new Dictionary<string, int>();
+            ngramMatrix = new Dictionary<string, int>();
         }
 
-        public void AddOccurence(string value)
+        public void AddOccurence(string ngram)
         {
-            if (matrix.ContainsKey(value))
+            if (ngramMatrix.ContainsKey(ngram))
             {
-                matrix[value]++;
+                ngramMatrix[ngram]++;
             }
             else
             {
-                matrix.Add(value, 1);
+                ngramMatrix.Add(ngram, 1);
             }
 
             totalOccurencesCount++;
@@ -56,9 +62,9 @@ namespace Language_Recognition_AI
 
         public double GetPropability(string value)
         {
-            if (matrix.ContainsKey(value))
+            if (ngramMatrix.ContainsKey(value))
             {
-                return matrix[value] / (double)totalOccurencesCount;
+                return ngramMatrix[value] / (double)totalOccurencesCount;
             }
             else
             {

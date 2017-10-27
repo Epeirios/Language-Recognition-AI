@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,14 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Utility;
 
 namespace Language_Recognition_AI
 {
     public partial class MainForm : Form
     {
-        private ModelControl[] modelControls;
+        Dictionary<ModelControl, IModelFacade> models;
         BackgroundWorker backgroundWorker;
-        DataManager dataManager;
+        DataManager.DataManager dataManager;
 
         public MainForm()
         {
@@ -23,14 +25,12 @@ namespace Language_Recognition_AI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.dataManager = new DataManager();
-            dataManager.EventProgress += DataManager_EventProgress;
-            
-            modelControls = new ModelControl[]
-            {
-                new ModelControl("TriGramModel", new NGramModel(new TriGramMatrix(), new BiGramMatrix()), dataManager),
-                new ModelControl("QuadGramModel", new NGramModel(new QuadGramMatrix(), new TriGramMatrix()), dataManager),
-            };
+            this.dataManager = new DataManager.DataManager();
+
+            this.models = new Dictionary<ModelControl, IModelFacade>();
+
+            models.Add(new ModelControl("Trigram"), new NGramFacade(3));
+            models.Add(new ModelControl("QuadGram"), new NGramFacade(4));
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
@@ -52,10 +52,11 @@ namespace Language_Recognition_AI
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            foreach (var modelControl in modelControls)
+            foreach (var item in models)
             {
-                flpModels.Controls.Add(modelControl);
-                modelControl.Runworker();
+                flpModels.Controls.Add(item.Key);
+                item.Value.TrainModel(dataManager.TrainingData);
+                item.Value.ValidateModel(dataManager.TrainingData);
             }
         }
 
@@ -98,15 +99,16 @@ namespace Language_Recognition_AI
 
             dgvResults.Columns.Add("Highest", "Highest");
 
-            foreach (var modelcontrol in modelControls)
+            foreach (var model in models)
             {
                 double highestValue = 0.0f;
+                string highestLang = "None";
 
                 List<string> cells = new List<string>();
 
-                cells.Add(modelcontrol.ModelName);
+                cells.Add(model.Key.ModelName);
 
-                Dictionary<Languages, double> propabilities = modelcontrol.Model.ValidateSentence(tbInputString.Text);
+                Dictionary<string, double> propabilities = model.Value.ValidateSentence(tbInputString.Text);
 
                 foreach (var item in propabilities)
                 {
@@ -115,12 +117,13 @@ namespace Language_Recognition_AI
                     if (value > highestValue)
                     {
                         highestValue = value;
+                        highestLang = item.Key;
                     }
 
                     cells.Add(value.ToString());
                 }
 
-                cells.Add(highestValue.ToString());
+                cells.Add(highestLang.ToString());
 
                 dgvResults.Rows.Add(cells.ToArray());
             }

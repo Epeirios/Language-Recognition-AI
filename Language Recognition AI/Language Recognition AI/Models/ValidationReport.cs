@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Language_Recognition_AI
+namespace Models
 {
-    public class Report
+    public class ValidationReport
     {
         private int countCorrect;
         private int countIncorrect;
@@ -35,13 +35,13 @@ namespace Language_Recognition_AI
             }
         }
 
-        public Report()
+        public ValidationReport()
         {
             countCorrect = 0;
             countIncorrect = 0;
         }
 
-        public void AddCase(Languages predicted, Languages actual)
+        public void AddCase(string predicted, string actual)
         {
             if (predicted == actual)
             {
