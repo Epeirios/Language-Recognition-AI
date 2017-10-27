@@ -46,46 +46,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventArgsProgress.cs" />
-    <Compile Include="IProgress.cs" />
-    <Compile Include="Models\NGram\BiGram.cs" />
-    <Compile Include="Models\NGram\BiGramMatrix.cs" />
-    <Compile Include="Models\NGram\NGramMatrix.cs" />
+    <Compile Include="Models\Facades\NeuralNetworkFacade.cs" />
+    <Compile Include="Models\Facades\NGramFacade.cs" />
+    <Compile Include="Models\NN\CryptoRandom.cs" />
+    <Compile Include="Models\NN\Dendrite.cs" />
+    <Compile Include="Models\NN\Layer.cs" />
+    <Compile Include="Models\NetworkHelper.cs" />
+    <Compile Include="Models\NN\NeuralNetworkModel.cs" />
+    <Compile Include="Models\NN\Neuron.cs" />
     <Compile Include="DataManager.cs" />
-    <Compile Include="Models\IModel.cs" />
-    <Compile Include="Languages.cs" />
+    <Compile Include="Models\Facades\IModelFacade.cs" />
+    <Compile Include="Models\Languages.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LanguageRecords.cs" />
-    <Compile Include="Models\NGram\QuadGram.cs" />
-    <Compile Include="ModelControl.cs">
+    <Compile Include="Models\LanguageRecords.cs" />
+    <Compile Include="UserControls\ModelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ModelControl.Designer.cs">
+    <Compile Include="UserControls\ModelControl.Designer.cs">
       <DependentUpon>ModelControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\NGram\NGram.cs" />
     <Compile Include="Models\NGram\NGramModel.cs" />
-    <Compile Include="Models\NGram\QuadGramMatrix.cs" />
-    <Compile Include="Models\NGram\TriGramMatrix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report.cs" />
-    <Compile Include="Models\NGram\TriGram.cs" />
-    <Compile Include="TrainingControl.cs">
+    <Compile Include="Models\ValidationReport.cs" />
+    <Compile Include="UserControls\TrainingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TrainingControl.Designer.cs">
+    <Compile Include="UserControls\TrainingControl.Designer.cs">
       <DependentUpon>TrainingControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility.cs" />
+    <Compile Include="Utility\Utility.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModelControl.resx">
+    <EmbeddedResource Include="UserControls\ModelControl.resx">
       <DependentUpon>ModelControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -98,7 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TrainingControl.resx">
+    <EmbeddedResource Include="UserControls\TrainingControl.resx">
       <DependentUpon>TrainingControl.cs</DependentUpon>
     </EmbeddedResource>
     <Content Include="Data\sentences.cvs">

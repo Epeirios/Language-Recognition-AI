@@ -4,131 +4,111 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Language_Recognition_AI
+namespace NGram
 {
-    public class NGramModel : IModel
+    public class NGramModel
     {
-        public event EventHandler<EventArgsProgress> EventProgress;
+        private string language;
 
-        private NGramMatrix n1Grams;
-        private NGramMatrix n2Grams;
+        private NGram n1gram;
+        private NGram n2gram;
 
-        public NGramMatrix N1Grams
+        public NGramModel(int n, string language)
         {
-            get
-            {
-                return n1Grams;
-            }
-            set
-            {
-                n1Grams = value;
-            }
-        }
+            this.language = language;
 
-        public NGramMatrix N2Grams
-        {
-            get
+            if (n <= 1)
             {
-                return n2Grams;
+                throw new Exception("n must be larger than 1");
             }
-            set
+            else
             {
-                n2Grams = value;
+                this.n1gram = new NGram(n, language);
+                this.n2gram = new NGram(n - 1, language);
             }
         }
 
-        public NGramModel(NGramMatrix n1Grams, NGramMatrix n2Grams)
+        public double Run(string sentence)
         {
-            this.n1Grams = n1Grams;
-            this.n2Grams = n2Grams;
-        }
+            double product = 1.0f;
 
-        public Report Validate(LanguageRecords[] languageRecords)
-        {
-            Report confusionReport = new Report();
+            string[] n1grams = SplitInGrams(sentence, n1gram.NGramSize);
+            string[] n2grams = SplitInGrams(sentence, n2gram.NGramSize, true); // assumed that this is always the shortest by 1
 
-            int progress = 0;
-
-            foreach (LanguageRecords lRecords in languageRecords)
+            if (n1grams.Length > 1)
             {
-                foreach (string record in lRecords.Records)
+                if (n1grams.Length == n2grams.Length + 1) // check if assumtion is true (should always be)
                 {
-                    Dictionary<Languages, double> report = ValidateSentence(record);
-
-                    Languages language = report.FirstOrDefault(x => x.Value == report.Values.Max()).Key;
-
-                    confusionReport.AddCase(language, lRecords.Language);
-                }
-
-                progress += 100 / languageRecords.Length;
-                UpdateProgress(progress);
-            }
-
-            UpdateProgress(100);
-
-            return confusionReport;
-        }
-
-        private void UpdateProgress(int progress)
-        {
-            EventProgress(this, new EventArgsProgress(progress));
-        }
-
-        public Dictionary<Languages, double> ValidateSentence(string sentence)
-        {
-            Dictionary<Languages, double> report = new Dictionary<Languages, double>();
-
-            Dictionary<Languages, double> products = GetNgramProduct(n1Grams, n2Grams, sentence);
-
-            foreach (var key in products.Keys)
-            {
-                report.Add(key, products[key]);
-            }
-
-            return report;
-        }
-
-        private Dictionary<Languages, double> GetNgramProduct(NGramMatrix n1GramsMatrix, NGramMatrix n2GramsMatrix, string sentence)
-        {
-            Dictionary<Languages, double> products = new Dictionary<Languages, double>();
-
-            for (int i = 0; i < n1GramsMatrix.NGrams.Count; i++)
-            {
-                double product = 1.0f;
-
-                NGram n1Gram = n1GramsMatrix.NGrams[i];
-                NGram n2Gram = n2GramsMatrix.NGrams[i];
-
-                string[] partsN1 = Utility.SplitInParts(sentence, n1Gram.NgramSize);
-                string[] partsN2 = Utility.SplitInParts(sentence, n2Gram.NgramSize, true);
-
-                if (partsN1.Length > 1)
-                {
-                    for (int j = 0; j < partsN2.Length; j++)
+                    for (int i = 0; i < n2grams.Length; i++) // is the reason we iterate through n2grams
                     {
-                        double prob1 = n1Gram.GetPropability(partsN1[j]);
-                        double prob2 = n2Gram.GetPropability(partsN2[j]);
+                        double prob1 = n1gram.GetPropability(n1grams[i]);
+                        double prob2 = n2gram.GetPropability(n2grams[i]);
 
                         double calc = prob1 / prob2;
 
                         product *= 1 + calc;
                     }
-
-                    product *= n1Gram.GetPropability(partsN1[partsN1.Length - 1]);
-                }
-                else if (partsN1.Length == 1)
-                {
-                    product = n1Gram.GetPropability(partsN1[0]);
                 }
                 else
                 {
-                    product = 0;
+                    throw new Exception("lenght of ngrams is wrong");
                 }
-
-                products.Add(n1Gram.Language, 1 / product);
+            }
+            else if(n2grams.Length == 1 && n1grams.Length == 0)
+            {
+                return n2gram.GetPropability(sentence);
+            }
+            else
+            {
+                return 0.0f;
             }
 
-            return products;
+            return product;
+        }
+
+        public void Train(string sentence)
+        {
+            string[] parts = SplitInGrams(sentence, n1gram.NGramSize);
+
+            foreach (var item in parts)
+            {
+                n1gram.AddOccurence(item);
+            }
+
+            parts = SplitInGrams(sentence, n2gram.NGramSize);
+
+            foreach (var item in parts)
+            {
+                n2gram.AddOccurence(item);
+            }
+        }
+
+        private string[] SplitInGrams(string str, int partLength, bool b = false)
+        {
+            List<string> output = new List<string>();
+
+            if (str == null)
+                throw new ArgumentNullException("s");
+            if (partLength <= 0)
+                throw new ArgumentException("Part length has to be positive.", "partLength");
+
+            for (int i = 0; i < str.Length - partLength; i++)
+            {
+                output.Add(str.Substring(i, partLength));
+            }
+
+            if (b)
+            {
+                if (output.Count <= 2)
+                {
+                    return new string[] { };
+                }
+
+                output.RemoveAt(0);
+                output.RemoveAt(output.Count - 1);
+            }
+
+            return output.ToArray();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Language_Recognition_AI
+namespace Models
 {
     public enum Languages
     {
