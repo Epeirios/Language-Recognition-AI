@@ -8,6 +8,11 @@ namespace Models
 {
     public class NeuralNetworkFacade : IModelFacade
     {
+        public ValidationReport GetValidationReport()
+        {
+            throw new NotImplementedException();
+        }
+
         public void TrainModel(LanguageRecords[] languagerecords)
         {
             throw new NotImplementedException();
@@ -18,7 +23,7 @@ namespace Models
             throw new NotImplementedException();
         }
 
-        public Dictionary<string, double> ValidateSentence(string sentence)
+        public Dictionary<Languages, double> ValidateSentence(string sentence)
         {
             throw new NotImplementedException();
         }

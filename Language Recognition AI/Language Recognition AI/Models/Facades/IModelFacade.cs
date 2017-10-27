@@ -10,8 +10,10 @@ namespace Models
     {
         void TrainModel(LanguageRecords[] languagerecords);
 
-        ValidationReport ValidateModel(LanguageRecords[] languagerecords);        
+        ValidationReport ValidateModel(LanguageRecords[] languagerecords);
 
-        Dictionary<string, double> ValidateSentence(string sentence);
+        ValidationReport GetValidationReport();
+
+        Dictionary<Languages, double> ValidateSentence(string sentence);
     }
 }

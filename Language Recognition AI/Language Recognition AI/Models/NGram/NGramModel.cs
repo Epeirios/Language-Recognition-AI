@@ -46,7 +46,7 @@ namespace NGram
 
                         double calc = prob1 / prob2;
 
-                        product *= 1 + calc;
+                        product *= calc;
                     }
                 }
                 else

@@ -11,16 +11,23 @@ namespace Models
     {
         int ngramsize;
         Dictionary<Languages, NGramModel> ngrammodels;
+        ValidationReport validationReport;
 
         public NGramFacade(int ngramsize)
         {
             this.ngramsize = ngramsize;
             this.ngrammodels = new Dictionary<Languages, NGramModel>();
+            this.validationReport = new ValidationReport();
 
             foreach (var item in Enum.GetValues(typeof(Languages)).Cast<Languages>())
             {
                 ngrammodels.Add(item, new NGramModel(ngramsize, item.ToString()));
             }
+        }
+
+        public ValidationReport GetValidationReport()
+        {
+            return validationReport;
         }
 
         public void TrainModel(LanguageRecords[] languagerecords)
@@ -36,30 +43,31 @@ namespace Models
 
         public ValidationReport ValidateModel(LanguageRecords[] languageRecords)
         {
-            ValidationReport confusionReport = new ValidationReport();
+            ValidationReport localReport = new ValidationReport();
 
             foreach (var languagerecord in languageRecords)
             {
                 foreach (var record in languagerecord.Records)
                 {
-                    Dictionary<string, double> report = ValidateSentence(record);
+                    Dictionary<Languages, double> report = ValidateSentence(record);
 
-                    string language = report.FirstOrDefault(x => x.Value == report.Values.Max()).Key;
+                    Languages language = report.FirstOrDefault(x => x.Value == report.Values.Max()).Key;
 
-                    confusionReport.AddCase(language, languagerecord.Language.ToString());
+                    localReport.AddCase(language, languagerecord.Language);
+                    validationReport.AddCase(language, languagerecord.Language);
                 }
             }
 
-            return confusionReport;
+            return localReport;
         }
 
-        public Dictionary<string, double> ValidateSentence(string sentence)
+        public Dictionary<Languages, double> ValidateSentence(string sentence)
         {
-            Dictionary<string, double> products = new Dictionary<string, double>();
+            Dictionary<Languages, double> products = new Dictionary<Languages, double>();
 
             foreach (var model in ngrammodels)
             {
-                products.Add(model.Key.ToString(), model.Value.Run(sentence));
+                products.Add(model.Key, model.Value.Run(sentence));
             }
 
             return products;

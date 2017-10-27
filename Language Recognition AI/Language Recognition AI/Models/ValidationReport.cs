@@ -8,48 +8,82 @@ namespace Models
 {
     public class ValidationReport
     {
-        private int countCorrect;
-        private int countIncorrect;
+        Dictionary<Languages, int> countCorrect;
+        Dictionary<Languages, int> countIncorrect;
 
-        public int CountCorrect
+        public int CountCasesTotal
         {
             get
             {
-                return countCorrect;
+                return countCorrect.Values.Sum() + countIncorrect.Values.Sum();
             }
         }
 
-        public int CountIncorrect
+        public int CountCasesCorrectTotal
         {
             get
             {
-                return countIncorrect;
+                return countCorrect.Values.Sum();
             }
         }
 
-        public int CountCases
+        public int CountCasesIncorrectTotal
         {
             get
             {
-                return CountCorrect + CountIncorrect;
+                return countIncorrect.Values.Sum();
             }
+        }
+
+        public int PercentageCorrectTotal
+        {
+            get
+            {
+                return CountCasesCorrectTotal / CountCasesTotal;
+            }
+        }
+
+        public int CountCases(Languages language)
+        {
+            return CountCorrect(language) + CountIncorrect(language);
+        }
+
+        public int CountCorrect(Languages language)
+        {
+            return countCorrect[language];
+        }
+
+        public int CountIncorrect(Languages language)
+        {
+            return countIncorrect[language];
+        }
+
+        public int PercentageCorrect(Languages language)
+        {
+            return CountCorrect(language) / CountCases(language);
         }
 
         public ValidationReport()
         {
-            countCorrect = 0;
-            countIncorrect = 0;
+            countCorrect = new Dictionary<Languages, int>();
+            countIncorrect = new Dictionary<Languages, int>();
+
+            foreach (Languages item in Enum.GetValues(typeof(Languages)))
+            {
+                countCorrect.Add(item, 0);
+                countIncorrect.Add(item, 0);
+            }
         }
 
-        public void AddCase(string predicted, string actual)
+        public void AddCase(Languages predicted, Languages actual)
         {
             if (predicted == actual)
             {
-                countCorrect++;
+                countCorrect[actual]++;
             }
             else
             {
-                countIncorrect++;
+                countIncorrect[actual]++;
             }
         }
     }

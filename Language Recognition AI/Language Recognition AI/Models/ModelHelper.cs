@@ -1,11 +1,44 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using NeuralNet;
+using System;
 
 namespace Models
 {
-    public static class NetworkHelper
+    public static class ModelHelper
     {
+        public static void ValidationReportToTreeView(TreeView tv, ValidationReport report)
+        {
+            tv.Nodes.Clear();
+
+            TreeNode root = new TreeNode("Validation Rapprot");
+
+            TreeNode totalNode = new TreeNode("Total");
+
+            totalNode.Nodes.Add(string.Format("Total Cases: {0}", report.CountCasesTotal.ToString()));
+            totalNode.Nodes.Add(string.Format("Total Correct: {0}", report.CountCasesCorrectTotal.ToString()));
+            totalNode.Nodes.Add(string.Format("Total Incorrect: {0}", report.CountCasesIncorrectTotal.ToString()));
+            totalNode.Nodes.Add(string.Format("Correct: {0}%",report.PercentageCorrectTotal.ToString()));
+
+            root.Nodes.Add(totalNode);
+
+            foreach (Languages item in Enum.GetValues(typeof(Languages)))
+            {
+                Languages language = item;
+
+                TreeNode itemNode = new TreeNode(language.ToString());
+
+                itemNode.Nodes.Add(string.Format("Cases: {0}",report.CountCases(language).ToString()));
+                itemNode.Nodes.Add(string.Format("Correct: {0}",report.CountCorrect(language).ToString()));
+                itemNode.Nodes.Add(string.Format("Incorrect: {0}",report.CountIncorrect(language).ToString()));
+                itemNode.Nodes.Add(string.Format("Correct: {0}%",report.PercentageCorrect(language).ToString()));
+
+                root.Nodes.Add(itemNode);
+            }
+
+            tv.Invoke((MethodInvoker)(() => tv.Nodes.Add(root)));
+        }
+
         public static void ToTreeView(TreeView t, NeuralNetworkModel nn)
         {
             t.Nodes.Clear();
@@ -43,10 +76,10 @@ namespace Models
 
         public static void ToPictureBox(PictureBox p, NeuralNetworkModel nn, int X, int Y)
         {
-            int neuronWidth    = 30;
+            int neuronWidth = 30;
             int neuronDistance = 50;
-            int layerDistance  = 50;
-            int fontSize       = 8;
+            int layerDistance = 50;
+            int fontSize = 8;
 
             Bitmap b = new Bitmap(p.Width, p.Height);
             Graphics g = Graphics.FromImage(b);
@@ -55,11 +88,11 @@ namespace Models
 
             int y = Y;
 
-            for(int l = 0; l < nn.Layers.Count; l++)
+            for (int l = 0; l < nn.Layers.Count; l++)
             {
                 Layer layer = nn.Layers[l];
 
-                int x = X - (neuronDistance * (layer.Neurons.Count / 2)) ;
+                int x = X - (neuronDistance * (layer.Neurons.Count / 2));
 
                 for (int n = 0; n < layer.Neurons.Count; n++)
                 {

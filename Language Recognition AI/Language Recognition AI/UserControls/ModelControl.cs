@@ -22,12 +22,28 @@ namespace Language_Recognition_AI
             }
         }
 
+        public TreeView ReportView
+        {
+            get
+            {
+                return tvControl;
+            }
+        }
+
         public ModelControl(string modelName)
         {
             InitializeComponent();
 
             this.modelName = modelName;
             groupBox.Text = modelName;
+        }
+        
+        public void UpdateProgressBar(int progress)
+        {
+            if (0 < progress && progress < 100 )
+            {
+                pbProgress.Value = progress;
+            }
         }
     }
 }
