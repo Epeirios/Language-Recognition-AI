@@ -39,7 +39,7 @@ namespace Models
         {
             get
             {
-                return CountCasesCorrectTotal / CountCasesTotal;
+                return CountCasesCorrectTotal / CountCasesTotal * 100;
             }
         }
 
@@ -60,7 +60,7 @@ namespace Models
 
         public int PercentageCorrect(Languages language)
         {
-            return CountCorrect(language) / CountCases(language);
+            return CountCorrect(language) / CountCases(language) * 100;
         }
 
         public ValidationReport()

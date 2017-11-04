@@ -71,5 +71,17 @@ namespace NGram
                 return 1 / (double)totalOccurencesCount + 1;
             }
         }
+
+        public int GetOccurence(string value)
+        {
+            if (ngramMatrix.ContainsKey(value))
+            {
+                return ngramMatrix[value];
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }

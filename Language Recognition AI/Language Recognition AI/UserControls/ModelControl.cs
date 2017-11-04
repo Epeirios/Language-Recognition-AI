@@ -40,7 +40,7 @@ namespace Language_Recognition_AI
         
         public void UpdateProgressBar(int progress)
         {
-            if (0 < progress && progress < 100 )
+            if (0 <= progress && progress <= 100 )
             {
                 pbProgress.Value = progress;
             }

@@ -65,10 +65,67 @@ namespace Models
         {
             Dictionary<Languages, double> products = new Dictionary<Languages, double>();
 
-            foreach (var model in ngrammodels)
+            const int chars = 30;
+
+            int parts = (int)Math.Floor(sentence.Length / (double)chars);
+
+            if (parts == 0)
             {
-                products.Add(model.Key, model.Value.Run(sentence));
+                foreach (var model in ngrammodels)
+                {
+                    products.Add(model.Key, model.Value.Run(sentence));
+                }
             }
+            else
+            {
+                for (int i = 1; i <= parts; i++)
+                {
+                    products.Clear();
+
+                    int sublenght = (i) * chars;
+
+                    if (i == parts)
+                    {
+                        sublenght = sentence.Length;
+                    }
+
+                    foreach (var model in ngrammodels)
+                    {
+                        products.Add(model.Key, model.Value.Run(sentence.Substring(0, sublenght)));
+                    }
+
+                    double max = 0;
+                    int mindif = 0;
+
+                    foreach (var item in products)
+                    {
+                        if (item.Value > max)
+                        {
+                            max = item.Value;
+                        }
+                    }
+
+                    foreach (var item in products)
+                    {
+                        if (item.Value != max)
+                        {
+                            int val = (int)(max / item.Value * 100);
+
+                            if (mindif > val)
+                            {
+                                mindif = val;
+                            }
+                        }
+                    }
+
+                    if (mindif >= 50)
+                    {
+                        break;
+                    }
+                }
+            }
+
+
 
             return products;
         }
