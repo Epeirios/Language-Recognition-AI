@@ -11,7 +11,7 @@ namespace DataManager
 {
     public class DataManager
     {
-        string dataPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\sentences.cvs");
+        string dataPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data\sentences2.cvs");
 
         private LanguageRecords[] trainingData;
         private LanguageRecords[] validationData;
@@ -41,14 +41,14 @@ namespace DataManager
         {
             int[] counts =
             {
-                392501,
-                539839,
-                335118,
-                798798,
-                527907,
-                549855,
-                276650,
-                256993,
+                2203,
+                6044,
+                1769,
+                18615,
+                3814,
+                1641,
+                841,
+                1596,
             };
 
             int totalcount = counts.Sum();
