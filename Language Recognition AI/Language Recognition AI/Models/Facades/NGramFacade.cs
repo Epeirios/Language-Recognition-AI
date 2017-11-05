@@ -134,8 +134,6 @@ namespace Models
                 }
             }
 
-
-
             return products;
         }
     }

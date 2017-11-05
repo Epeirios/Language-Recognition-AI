@@ -32,7 +32,6 @@ namespace Language_Recognition_AI
 
             models.Add(new ModelControl("Trigram"), new NGramFacade(3));
             models.Add(new ModelControl("QuadGram"), new NGramFacade(4));
-            //models.Add(new ModelControl("NeuralNetwork"), new NeuralNetworkFacade());
 
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
@@ -41,8 +40,30 @@ namespace Language_Recognition_AI
             backgroundWorker.RunWorkerAsync();
         }
 
+        private char[] GenerateGlobalCharDict()
+        {
+            List<char> chardict = new List<char>();
+
+            foreach (var data in dataManager.TrainingData)
+            {
+                foreach (var item in data.CharDictionary)
+                {
+                    char chr = item.ToArray()[0];
+
+                    if (!chardict.Contains(chr))
+                    {
+                        chardict.Add(item.ToArray()[0]);
+                    }
+                }
+            }
+
+            return chardict.ToArray();
+        }
+
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            models.Add(new ModelControl("NeuralNetwork"), new NeuralNetworkFacade(0.1f, new int[] { 100, 100, 8 }, GenerateGlobalCharDict()));
+
             foreach (var item in models)
             {
                 flpModels.Controls.Add(item.Key);

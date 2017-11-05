@@ -70,12 +70,12 @@
             this.tbInputString.Location = new System.Drawing.Point(12, 438);
             this.tbInputString.Multiline = true;
             this.tbInputString.Name = "tbInputString";
-            this.tbInputString.Size = new System.Drawing.Size(902, 67);
+            this.tbInputString.Size = new System.Drawing.Size(1007, 67);
             this.tbInputString.TabIndex = 4;
             // 
             // btnProcess
             // 
-            this.btnProcess.Location = new System.Drawing.Point(920, 436);
+            this.btnProcess.Location = new System.Drawing.Point(1025, 436);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(75, 23);
             this.btnProcess.TabIndex = 5;
@@ -94,7 +94,7 @@
             this.dgvResults.Location = new System.Drawing.Point(12, 511);
             this.dgvResults.Name = "dgvResults";
             this.dgvResults.ReadOnly = true;
-            this.dgvResults.Size = new System.Drawing.Size(983, 111);
+            this.dgvResults.Size = new System.Drawing.Size(1088, 111);
             this.dgvResults.TabIndex = 6;
             // 
             // flpModels
@@ -102,7 +102,7 @@
             this.flpModels.AutoScroll = true;
             this.flpModels.Location = new System.Drawing.Point(233, 29);
             this.flpModels.Name = "flpModels";
-            this.flpModels.Size = new System.Drawing.Size(762, 374);
+            this.flpModels.Size = new System.Drawing.Size(867, 374);
             this.flpModels.TabIndex = 7;
             // 
             // pbDataLoading
@@ -116,7 +116,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1007, 634);
+            this.ClientSize = new System.Drawing.Size(1112, 634);
             this.Controls.Add(this.pbDataLoading);
             this.Controls.Add(this.flpModels);
             this.Controls.Add(this.dgvResults);

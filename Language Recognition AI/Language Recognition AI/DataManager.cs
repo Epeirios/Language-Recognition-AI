@@ -34,7 +34,7 @@ namespace DataManager
 
         public DataManager()
         {
-            
+
         }
 
         public void ProcessData()
