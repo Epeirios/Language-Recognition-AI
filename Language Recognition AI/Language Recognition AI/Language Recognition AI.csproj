@@ -95,9 +95,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="Data\sentences.cvs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Data\sentences2.cvs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
