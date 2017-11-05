@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Models
 {
@@ -13,7 +14,7 @@ namespace Models
             throw new NotImplementedException();
         }
 
-        public void TrainModel(LanguageRecords[] languagerecords)
+        public long TrainModel(LanguageRecords[] languagerecords)
         {
             throw new NotImplementedException();
         }

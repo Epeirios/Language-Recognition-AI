@@ -31,18 +31,22 @@
             this.tvControl = new System.Windows.Forms.TreeView();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.pbProgress = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblTrainingTime = new System.Windows.Forms.Label();
             this.groupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tvControl
             // 
-            this.tvControl.Location = new System.Drawing.Point(3, 19);
+            this.tvControl.Location = new System.Drawing.Point(3, 32);
             this.tvControl.Name = "tvControl";
-            this.tvControl.Size = new System.Drawing.Size(244, 236);
+            this.tvControl.Size = new System.Drawing.Size(244, 223);
             this.tvControl.TabIndex = 0;
             // 
             // groupBox
             // 
+            this.groupBox.Controls.Add(this.lblTrainingTime);
+            this.groupBox.Controls.Add(this.label1);
             this.groupBox.Controls.Add(this.pbProgress);
             this.groupBox.Controls.Add(this.tvControl);
             this.groupBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -60,6 +64,24 @@
             this.pbProgress.Size = new System.Drawing.Size(241, 23);
             this.pbProgress.TabIndex = 5;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Training Total Millisec:";
+            // 
+            // lblTrainingTime
+            // 
+            this.lblTrainingTime.AutoSize = true;
+            this.lblTrainingTime.Location = new System.Drawing.Point(124, 16);
+            this.lblTrainingTime.Name = "lblTrainingTime";
+            this.lblTrainingTime.Size = new System.Drawing.Size(35, 13);
+            this.lblTrainingTime.TabIndex = 7;
+            this.lblTrainingTime.Text = "label2";
+            // 
             // ModelControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -68,6 +90,7 @@
             this.Name = "ModelControl";
             this.Size = new System.Drawing.Size(250, 290);
             this.groupBox.ResumeLayout(false);
+            this.groupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -77,5 +100,7 @@
         private System.Windows.Forms.TreeView tvControl;
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.ProgressBar pbProgress;
+        private System.Windows.Forms.Label lblTrainingTime;
+        private System.Windows.Forms.Label label1;
     }
 }

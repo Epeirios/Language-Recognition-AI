@@ -1,9 +1,11 @@
 ﻿using NGram;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Models
 {
@@ -30,8 +32,11 @@ namespace Models
             return validationReport;
         }
 
-        public void TrainModel(LanguageRecords[] languagerecords)
+        public long TrainModel(LanguageRecords[] languagerecords)
         {
+            Stopwatch t = new Stopwatch();
+            t.Start();
+
             foreach (var languagerecord in languagerecords)
             {
                 foreach (var record in languagerecord.Records)
@@ -39,6 +44,10 @@ namespace Models
                     ngrammodels[languagerecord.Language].Train(record);
                 }
             }
+
+            t.Stop();
+
+            return t.ElapsedMilliseconds;
         }
 
         public ValidationReport ValidateModel(LanguageRecords[] languageRecords)
@@ -51,7 +60,7 @@ namespace Models
                 {
                     Dictionary<Languages, double> report = ValidateSentence(record);
 
-                    Languages language = report.FirstOrDefault(x => x.Value == report.Values.Max()).Key;
+                    Languages language = report.FirstOrDefault(x => x.Value == report.Values.Min()).Key;
 
                     localReport.AddCase(language, languagerecord.Language);
                     validationReport.AddCase(language, languagerecord.Language);

@@ -54,11 +54,15 @@ namespace Language_Recognition_AI
                 {
                     BackgroundWorker b = o as BackgroundWorker;
 
+                    long trainingtime = 0;
+
                     for (int i = 0; i < dataManager.TrainingData.Length; i++)
                     {
                         b.ReportProgress((int)(10 + i * 10));
-                        item.Value.TrainModel(new LanguageRecords[] { dataManager.TrainingData[i] });
+                        trainingtime += item.Value.TrainModel(new LanguageRecords[] { dataManager.TrainingData[i] });
                     }
+
+                    item.Key.SetTrainingTime(trainingtime);
 
                     for (int i = 0; i < dataManager.ValidationData.Length; i++)
                     {

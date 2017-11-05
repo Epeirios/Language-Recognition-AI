@@ -8,7 +8,7 @@ namespace Models
 {
     public interface IModelFacade
     {
-        void TrainModel(LanguageRecords[] languagerecords);
+        long TrainModel(LanguageRecords[] languagerecords);
 
         ValidationReport ValidateModel(LanguageRecords[] languagerecords);
 
